@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-model href="rfc7991bis.rnc"?>  <!-- Required for schema validation and schema-aware editing -->
+<!-- <?xml-stylesheet type="text/xsl" href="rfc2629.xslt" ?> -->
+<!-- This third-party XSLT can be enabled for direct transformations in XML processors, including most browsers -->
+
+
+<!DOCTYPE rfc [
+  <!ENTITY nbsp    "&#160;">
+  <!ENTITY zwsp   "&#8203;">
+  <!ENTITY nbhy   "&#8209;">
+  <!ENTITY wj     "&#8288;">
+]>
+<!-- If further character entities are required then they should be added to the DOCTYPE above.
+     Use of an external entity file is not recommended. -->
+
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  category="info"
+  docName="draft-link-v6ops-clon.xml"
+  ipr="trust200902"
+  obsoletes=""
+  submissionType="IETF"
+  xml:lang="en"
+  version="3">
+  <front>
+<title abbrev="claton">464 Customer-side Translator (CLAT): Node Recommendations</title>
+    <seriesInfo name="Internet-Draft" value="draft-link-v6ops-clon-00"/>
+    <author fullname="Jen Linkova" initials="J" surname="Linkova">
+      <organization>Google</organization>
+      <address>
+        <postal>
+          <!-- Reorder these if your country does things differently -->
+          <street>1 Darling Island Rd</street>
+          <city>Pyrmont</city>
+          <region>NSW</region>
+          <code>2009</code>
+          <country>AU</country>
+        </postal>        
+        <email>furry13@gmail.com</email>  
+        <email>furry@google.com</email>  
+      </address>
+    </author>
+    <date year="2023"/>
+<area>Ops</area>
+    <workgroup>IPv6 operations</workgroup>
+    <keyword>ipv6</keyword>
+    <keyword>slaac</keyword>
+    <keyword>464xlat</keyword>
+    <keyword>clat</keyword>
+    <keyword>nat64</keyword>
+    <keyword>pref64</keyword>
+    <keyword>ipv6-only</keyword>
+    <keyword>ipv6-mostly</keyword>
+
+
+    <abstract>
+ <t>
+464XLAT (<xref target="RFC6877"/>) defines an arcitecture for providing IPv4 connectivity across an IPv6-only network.
+The solution  contains two key elements: provider-side translator (PLAT) and customer-side translator (CLAT).
+This document provides recommendations on when a node shall enable or disable CLAT.
+</t>
+
+    </abstract>
+ 
+  </front>
+
+  <middle>
+    
+    <section>
+      <name>Introduction</name>
+<t>
+464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>).
+In that scenario a mobile phone performs the CLAT function, providing a private IPv4 address and IPv4 default route for the applications and tethered devices.
+Enabling 464XLAT allowed mobile operators to migrate User Equipment (UE) devices (also known as mobile phones) to IPv6-only mode, where those devices are only assigned IPv6 addresses.
+</t>
+<t>
+Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
+Even if the network provide PLAT in the form of NAT64, hosts like desktops and laptops still the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
+However as more and more operating systems outside of 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode.
+So networks like public WiFi, entterprise networks or even home networks can deploy 464XLAN as described in Section 4.2 of <xref target="RFC6877"/>:
+</t>
+<ul>
+<li>
+<t>PLAT functions are performed by NAT64 network devices.</t>
+</li>
+<li>
+<t>
+CLAT is performed by the host itself.
+</t>
+</li>
+</ul>
+
+<t>
+Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target="RFC6877"/>), when a CPE router is connected to an IPv6-only network and provides CLAT functions for IPv4-enabled downstream devices.
+</t>
+
+<t>
+For both scenarios to work, the node performing CLAT (such as a host or a CPE router) need to enable the CLAT when connecting to an IPv6-only network.
+This document provides recommendations for the nodes on when to enable CLAT and what conditions might lead to disabling CLAT functions.
+</t>
+
+    </section>
+      
+      <section>
+        <name>Requirements Language</name>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+          "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+          RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+          interpreted as described in BCP 14 <xref target="RFC2119"/>
+          <xref target="RFC8174"/> when, and only when, they appear in
+          all capitals, as shown here.</t>
+      </section>
+
+<section anchor="term">
+<name>
+Terminology
+</name>
+<t>
+To be added
+</t>
+</section>
+
+    <section anchor="enable">
+<name>Enabling CLAT</name>
+<t>
+As 464XLAT requires both PLAT and CLAT elements, enabling CLAT in the absence of the corresponding PLAT system would cause an outage for the CLAT traffic.
+At the same time, when PLAT is present, the node performing CLAT needs to obtain the information about NAT64 prefix used by PLAT.
+Therefore the node SHOULD enable CLAT if it receives an Router Advertisement containing PREF64 option (<xref target="RFC8781"/>). 
+PREF64 option indicates that the network supports NAT64 and provides the node with all information required for CLAT at the same time.
+</t>
+<t>
+If RAs received by the node do not contain PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain NAT64 prefix (such as <xref target="RFC7050"/>).
+</t>
+<t>
+Some networks might provide PLAT functions while still providing devices with IPv4 addresses. 
+From performance perspective native IPv4 connectivity might be preferrable over 464XLAT, therefore the node MAY delay enabling CLAT until one of the following happens:
+</t>
+<ul>
+<li>
+<t>
+A DHCPOFFER message from the server contains a valid IPv6-Only Preferred option (<xref target="RFC8925"/>).
+</t>
+</li>
+<li>
+<t>
+The node fails to obtain an IPv4 address via DHCPv4.
+The exact timeout period is implementation-specific.
+</t>
+</li>
+</ul>
+<t>
+However enabling CLAT only in the absence of IPv4 addresses is impactful for IPv4-only applications, as such applications can not benefit from 464XLAT until CLAT is operational.
+The delay (and impact for applications) is more significant if the node waits for DHCPv4 to time out. 
+Therefore the timeout period shall be short enough.
+</t>
+</section>
+<section anchor="disable">
+<name>Disabling CLAT</name>
+<t>
+The node MAY chose to turn CLAT off if an IPv4 address becomes available after CLAT has started.
+However turning it off would affect all applications and traffic flows utilizing CLAT.
+</t>
+</section>
+    <section anchor="Security">
+      <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
+      <name>Security Considerations</name>
+<t>
+If a malicious actor spoofs PLAT presence signals (such as an RA with PREF64 option) or DNS responses for DNS-based NAT64 prefix detection (<xref target="RFC7050"/>), traffic of IPv4-only applications using CLAT can be affected:
+</t>
+<ul>
+<li>
+<t>if there is no PLAT (NAT64) devices, traffic to NAT64 destinations would be dropped.</t>
+</li>
+<li>
+<t>
+If the attacker intercepts traffic for the NAT64 prefix (e.g. by providing the victim with a bogus NAT64 prefix and steering traffic for those destinations towards themselves), the attacker might be able to perform man-in-the-middle attack.
+</t>
+</li>
+</ul>
+<t>
+Using PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks, as the attacker needs to be on-link.
+</t>
+    </section>
+
+    <section anchor="privacy">
+      <name>Privacy Considerations</name>
+      <t>
+This document does not introduce any privacy considerations.
+      </t>
+    </section>
+    
+    <section anchor="IANA">
+    <!-- All drafts are required to have an IANA considerations section. See RFC 8126 for a guide.-->
+      <name>IANA Considerations</name>
+      <t>This memo does not introduce any requests to IANA.</t>
+    </section>
+    
+    <!-- NOTE: The Acknowledgements and Contributors sections are at the end of this template -->
+  </middle>
+
+  <back>
+    <references>
+      <name>References</name>
+      <references>
+        <name>Normative References</name>
+        
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6877.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7050.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
+        <!-- The recommended and simplest way to include a well known reference -->
+        
+      </references>
+ 
+      <references>
+	      <name>Informative References</name>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4861.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
+
+      </references>
+    </references>
+    
+    <section anchor="Acknowledgements" numbered="false">
+      <name>Acknowledgements</name>
+<t>
+Thanks to Lorenzo Colitti, Tommy Jensen, Ted Lemon,  for the discussions, the input and all contribution.
+</t>
+    </section>
+    
+ </back>
+</rfc>
