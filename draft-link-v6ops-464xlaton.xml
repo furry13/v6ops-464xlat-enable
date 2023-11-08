@@ -75,9 +75,9 @@ Enabling 464XLAT allowed mobile operators to migrate User Equipment (UE) devices
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
-Even if the network provide PLAT in the form of NAT64, hosts like desktops and laptops still the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
+Even if the network provide PLAT in the form of NAT64, hosts like desktops and laptops still need the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
 However as more and more operating systems outside of 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode.
-So networks like public WiFi, entterprise networks or even home networks can deploy 464XLAN as described in Section 4.2 of <xref target="RFC6877"/>:
+So networks like public WiFi, enterprise networks or even home networks can deploy 464XLAN as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
 <ul>
 <li>
