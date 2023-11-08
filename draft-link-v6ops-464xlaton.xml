@@ -19,6 +19,7 @@
   docName="draft-link-v6ops-claton-01"
   ipr="trust200902"
   obsoletes=""
+  updates="8585"
   submissionType="IETF"
   xml:lang="en"
   version="3">
@@ -91,7 +92,7 @@ CLAT is performed by the host itself.
 </ul>
 
 <t>
-Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target="RFC6877"/>), when a CPE router is connected to an IPv6-only network and provides CLAT functions for IPv4-enabled downstream devices.
+Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target="RFC6877"/>), when a CPE router is connected to an IPv6-only network and provides CLAT functions for IPv4-enabled downstream devices. <xref target="RFC8585"/> specifies 464XLAT support requirements for such devices.
 </t>
 
 <t>
@@ -143,7 +144,7 @@ A DHCPOFFER message from the server contains a valid IPv6-Only Preferred option 
 </li>
 <li>
 <t>
-The node fails to obtain an IPv4 address via DHCPv4.
+The node fails to obtain an IPv4 address via DHCPv4 for some period of time.
 The exact timeout period is implementation-specific.
 </t>
 </li>
@@ -158,8 +159,115 @@ Therefore the timeout period shall be short enough.
 <name>Disabling CLAT</name>
 <t>
 The node MAY chose to turn CLAT off if an IPv4 address becomes available after CLAT has started.
-However turning it off would affect all applications and traffic flows utilizing CLAT.
+However turning it off would affect all applications and traffic flows already utilizing CLAT.
 </t>
+</section>
+<section anchor="update">
+<name>
+Updates to RFC8585
+</name>
+<t>
+This document makes the following changes to Section 3.2.1 of [RFC8585]:
+</t>
+<t>
+OLD TEXT:
+</t>
+<t>
+===
+</t>
+<t>
+464XLAT requirements:
+</t>
+<t>
+===
+</t>
+<t>
+NEW TEXT:
+</t>
+<t>
+===
+</t>
+<t>
+464XLAT requirements:
+</t>
+<t>
+464XLAT-0:  The IPv6 Transition CE Router SHOULD follow recommendations provided in draft-link-v6ops-claton.
+</t>
+<t>
+===
+</t>
+<t>
+OLD TEXT:
+</t>
+<t>
+===
+</t>
+<t>464XLAT-4: The IPv6 Transition CE Router MUST implement <xref target="RFC7050"/>
+               ("Discovery of the IPv6 Prefix Used for IPv6 Address
+               Synthesis") in order to discover the provider-side
+               translator (PLAT) translation IPv4 and IPv6
+               prefix(es)/suffix(es). </t>
+
+<t>464XLAT-5: If PCP is implemented, the IPv6 Transition CE Router MUST
+               follow <xref target="RFC7225"/> ("Discovering NAT64 IPv6 Prefixes Using
+               the Port Control Protocol (PCP)") in order to learn the
+               PLAT-side translation IPv4 and IPv6 prefix(es)/suffix(es)
+               used by an upstream PCP-controlled NAT64 device. </t>
+
+<t>464XLAT-6:  If the network provides several choices for the
+               discovery/learning of the NAT64 prefix, the priority to
+               use one or the other MUST follow this order: 1) <xref target="RFC7225"/>
+               and 2) <xref target="RFC7050"/>.</t>
+<t>
+   The NAT64 prefix could be discovered by means of the method defined
+   in <xref target="RFC7050"/> only if the service provider uses DNS64 [RFC6147].  It
+   may be the case that the service provider does not use or does not
+   trust DNS64 [RFC6147] because the DNS configuration at the CE (or
+   hosts behind the CE) can be modified by the customer.  In that case,
+   the service provider may opt to configure the NAT64 prefix by means
+   of the option defined in <xref target="RFC7225"/>.  This can also be used if the
+   service provider uses DNS64 [RFC6147].
+</t>
+<t>
+===
+</t>
+<t>
+NEW TEXT
+</t>
+<t>
+===
+</t>
+<t>464XLAT-4: The IPv6 Transition CE Router MUST implement <xref target="RFC8781"/> ("Discovering PREF64 in Router Advertisements") and <xref target="RFC7050"/>
+               ("Discovery of the IPv6 Prefix Used for IPv6 Address
+               Synthesis") in order to discover the provider-side
+               translator (PLAT) translation IPv4 and IPv6
+               prefix(es)/suffix(es). </t>
+
+<t>464XLAT-5: If PCP is implemented, the IPv6 Transition CE Router MUST
+               follow <xref target="RFC7225"/> ("Discovering NAT64 IPv6 Prefixes Using
+               the Port Control Protocol (PCP)") in order to learn the
+               PLAT-side translation IPv4 and IPv6 prefix(es)/suffix(es)
+               used by an upstream PCP-controlled NAT64 device. </t>
+
+<t>464XLAT-6:  If the network provides several choices for the
+               discovery/learning of the NAT64 prefix, the priority to
+               use one or the other MUST follow this order: 1) <xref target="RFC8781"/> 2)<xref target="RFC7225"/>
+               and 3) <xref target="RFC7050"/>.</t>
+<t>
+   <xref target="RFC8781"/> allows the service provider to signal NAT64 prefix independntly from DNS64 presence.
+   At the same time the NAT64 prefix could be discovered by means of the method defined
+   in <xref target="RFC7050"/> only if the service provider uses DNS64 [RFC6147].  It
+   may be the case that the service provider does not use or does not
+   trust DNS64 [RFC6147] because the DNS configuration at the CE (or
+   hosts behind the CE) can be modified by the customer.  In that case,
+   the service provider may opt to configure the NAT64 prefix by means
+   of the option defined in <xref target="RFC7225"/>.  This can also be used if the
+   service provider uses DNS64 [RFC6147].
+</t>
+<t>
+===
+</t>
+
 </section>
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
@@ -209,6 +317,7 @@ This document does not introduce any privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7050.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8585.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
@@ -218,6 +327,7 @@ This document does not introduce any privacy considerations.
 	      <name>Informative References</name>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4861.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7225.xml"/>
 
       </references>
     </references>
