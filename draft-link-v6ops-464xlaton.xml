@@ -41,6 +41,12 @@
         <email>furry@google.com</email>  
       </address>
     </author>
+<author initials="T." surname="Jensen" fullname="Tommy Jensen">
+      <organization showOnFrontPage="true">Microsoft</organization>
+      <address>
+        <email>tojens@microsoft.com</email>
+      </address>
+    </author>
     <date year="2023"/>
 <area>Ops</area>
     <workgroup>IPv6 operations</workgroup>
@@ -154,6 +160,28 @@ However enabling CLAT only in the absence of IPv4 addresses is impactful for IPv
 The delay (and impact for applications) is more significant if the node waits for DHCPv4 to time out. 
 Therefore the timeout period shall be short enough.
 </t>
+</section>
+
+<section anchor="addr">
+<name>
+CLAT Addresses Considerations
+</name>
+
+<section anchor="v6addr">
+<name>
+CLAT IPv6 Addresses
+</name>
+<t>
+
+</t>
+</section>
+
+<section anchor="v4addr">
+<name>
+CLAT IPv4 Addresses
+</name>
+</section>
+
 </section>
 <section anchor="disable">
 <name>Disabling CLAT</name>
@@ -335,7 +363,7 @@ This document does not introduce any privacy considerations.
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Lorenzo Colitti, Tommy Jensen, Ted Lemon, Dieter Siegmund for the discussions, the input and all contribution.
+Thanks to Ondrej Caletka, Lorenzo Colitti, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
 </t>
     </section>
     
