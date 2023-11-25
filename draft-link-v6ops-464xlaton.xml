@@ -125,40 +125,37 @@ Terminology
 To be added
 </t>
 </section>
+<section anchor="multihomed">
+<name>Multiple Interfaces Considerations</name>
+<t>
+A node may have multiple IPv6-only interfaces (for example, a mobile phone can be connected to an IPv6-only WiFi network and to an IPv6-only mobile network).
+In that case the mode SHOULD run an independent dedicated CLAT instance on each interface connected to a network equipped with PLAT.
+Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
+The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default routes.
+</t>
+</section>
 
     <section anchor="enable">
 <name>Enabling CLAT</name>
 <t>
-As 464XLAT requires both PLAT and CLAT elements, enabling CLAT in the absence of the corresponding PLAT system would cause an outage for the CLAT traffic.
-At the same time, when PLAT is present, the node performing CLAT needs to obtain the information about NAT64 prefix used by PLAT.
-Therefore the node SHOULD enable CLAT if it receives an Router Advertisement containing PREF64 option (<xref target="RFC8781"/>). 
-PREF64 option indicates that the network supports NAT64 and provides the node with all information required for CLAT at the same time.
+To enable CLAT, the node needs discover the PLAT-side translation IPv6 prefix, also known as NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
+PREF64 Router Advertisement option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports NAT64 (PLAT) function.
+Therefore the node SHOULD enable CLAT if it receives an Router Advertisement containing PREF64 option.
 </t>
 <t>
-If RAs received by the node do not contain PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain NAT64 prefix (such as <xref target="RFC7050"/>).
+If RAs received by the node do not contain PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
+In that case the node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained an IPv4 address.
 </t>
+<section anchor="ipv4detect">
+<name>Detecting IPv4 Presence</name>
 <t>
-Some networks might provide PLAT functions while still providing devices with IPv4 addresses. 
-From performance perspective native IPv4 connectivity might be preferrable over 464XLAT, therefore the node MAY delay enabling CLAT until one of the following happens:
+IPv6 interface configuration might completed faster than 
+From performance perspective native IPv4 connectivity is preferrable over 464XLAT, so CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface.
+However the node SHOULD NOT wait for an explicit (DHCPv4 Option 108, <xref target="RFC8925"/>) or an implicit (DHCPv4 timeouts) indication that native IPv4 connectivity is not available.
+Such delay would be impactful for IPv4-only applications, as such applications can not benefit from 464XLAT until CLAT is operational.
+Therefore the node SHOULD enable CLAT as soon as possible and disable it later, if IPv4 connectivity becomes available.
 </t>
-<ul>
-<li>
-<t>
-A DHCPOFFER message from the server contains a valid IPv6-Only Preferred option (<xref target="RFC8925"/>).
-</t>
-</li>
-<li>
-<t>
-The node fails to obtain an IPv4 address via DHCPv4 for some period of time.
-The exact timeout period is implementation-specific.
-</t>
-</li>
-</ul>
-<t>
-However enabling CLAT only in the absence of IPv4 addresses is impactful for IPv4-only applications, as such applications can not benefit from 464XLAT until CLAT is operational.
-The delay (and impact for applications) is more significant if the node waits for DHCPv4 to time out. 
-Therefore the timeout period shall be short enough.
-</t>
+</section>
 </section>
 
 <section anchor="addr">
