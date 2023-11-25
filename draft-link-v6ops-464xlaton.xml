@@ -76,8 +76,7 @@ This document provides recommendations on when a node shall enable or disable CL
     <section>
       <name>Introduction</name>
 <t>
-464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>).
-In that scenario a mobile phone performs the CLAT function, providing a private IPv4 address and IPv4 default route for the applications and tethered devices.
+464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where a mobile phone performs the CLAT function, providing a private IPv4 address and IPv4 default route for the applications and tethered devices.
 Enabling 464XLAT allowed mobile operators to migrate User Equipment (UE) devices (also known as mobile phones) to IPv6-only mode, where those devices are only assigned IPv6 addresses.
 </t>
 <t>
@@ -103,7 +102,7 @@ Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target=
 
 <t>
 For both scenarios to work, the node performing CLAT (such as a host or a CPE router) need to enable the CLAT when connecting to an IPv6-only network.
-This document provides recommendations for the nodes on when to enable CLAT and what conditions might lead to disabling CLAT functions.
+This document complement <xref target="RFC6877"/> by  providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
     </section>
