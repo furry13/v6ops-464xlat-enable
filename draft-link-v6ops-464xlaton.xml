@@ -232,7 +232,7 @@ It should be noted that <xref target="RFC6877"/> implies that the second deploym
 <t>
 In the latter case, the CLAT needs a single IPv4 address only. The node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions, including, but not limited to 464XLAT.
 If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
-It means that it might it be possible to run more that 8 CLAT instances per node.
+It means that it might not be possible to run more than 8 CLAT instances per node.
 The node MUST NOT send packets on wire from the local CLAT address.
 </t>
 
