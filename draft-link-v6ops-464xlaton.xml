@@ -236,6 +236,16 @@ If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the 
 It means that it might not be possible to run more than 8 CLAT instances per node.
 The node MUST NOT send packets on wire from the local CLAT address.
 </t>
+<t>
+The host SHOULD use 255.255.255.255 as a netmask for the CLAT address.
+That allows all 8 addresses from 192.0.0.2/29 to be used, if needed.
+</t>
+<t>
+It should be noted that 192.0.0.0/29 is shared between multiple IPv4 continuity solutions such as 464XLAT and DS-Lite (see <xref target="RFC7335"/>.
+For example, Section 10 of <xref target="RFC6333"/> reserves 192.0.0.1 for the Dual-Stack Lite default router.
+However, as per Section 4 of <xref target="RFC7335"/>, the host MUST NOT enable two active IPv4 continuity solutions simultaneously in a way that would cause a node to have overlapping 192.0.0.0/29 address space.
+Therefore, as long as the host is not using DS-Lite, it MAY use 192.0.0.1 as a CLAT address.
+</t>
 
 </section>
 
