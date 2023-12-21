@@ -381,7 +381,7 @@ If the attacker intercepts traffic for the NAT64 prefix (e.g. by providing the v
 </li>
 </ul>
 <t>
-Using PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks, as the attacker needs to be on-link.
+Using PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks, as the attacker needs to be on-link and be able to bypass layer-2 security features such as RA Guard.
 </t>
     </section>
 
