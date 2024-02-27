@@ -124,7 +124,7 @@ Terminology
 <ul>
 <li>
 <t>
-IPv6-only network: a network which do not assign IPv4 addresses to hosts and provides connectivity to IPv4-only destinations via NAT64 (<xref target="RFC6146"/>).
+IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 ((<xref target="RFC6146"/>). In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it's required by the 464XLAT architecture (<xref target="RFC6877"/>).
 </t>
 </li>
 <li>
