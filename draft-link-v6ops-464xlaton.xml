@@ -205,7 +205,7 @@ Despite the word "wireless" in the name, this architecure is applicable for wire
 In the latter case, the CLAT instance needs a single IPv6 and a single IPv4 address only.
 The node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions including but not limited to 464XLAT.
 If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
-This means that it might not be possible to run more than 8 CLAT instances per node.
+This means that it is not possible to run more than 8 CLAT instances per node.
 The node MUST NOT send packets on wire from the local CLAT address.
 </t>
 <t>
