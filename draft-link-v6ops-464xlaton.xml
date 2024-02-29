@@ -259,6 +259,27 @@ That improves the chances of the protocol working via CLAT even if CLAT is not a
 The node SHOULD generate a different interface id for the CLAT address when connecting to different networks, even if the NAT64 prefix and the local IPv4 CLAT address do not change. 
 To achieve that, the node SHOULD generate a random checksum-neutral CLAT address every time.
 </t>
+
+<section anchor="mhoming">
+<name>CLAT and Multiple Prefixes per Interface</name>
+<t>
+The CLAT instance SHOULD obtain a dedicated IPv6 address from each prefix used to configure IPv6 addresses on the given interface. When selecting an address to be used as a source address for the translated packet, the following rules are applied:
+</t>
+<ul>
+<li>
+<t>
+All packets of the session MUST be translated to the same IPv6 address.
+</t>
+</li>
+<li>
+<t>
+When a new session is created by the CLAT instance, the instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
+</t>
+</li>
+</ul>
+
+</section>
+
 </section>
 </section>
 <section anchor="disable">
@@ -424,6 +445,7 @@ This document does not introduce any privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6877.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7050.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7335.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8028.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8585.xml"/>
