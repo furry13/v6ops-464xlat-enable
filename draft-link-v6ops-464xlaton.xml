@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464 Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-link-v6ops-claton"/>
+    <seriesInfo name="Internet-Draft" value="draft-link-v6ops-claton-02"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -146,28 +146,56 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 
     <section anchor="enable">
 <name>Enabling CLAT</name>
+
 <t>
-To enable CLAT, the node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
+For performance and security reasons CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface. 
+Therefore recommendations provided in this section are applicable to an IPv6-only node (a node which does not obtain an IPv4 address via DHCP or static configuration).
+</t>
+
+<t>
+To enable CLAT, an IPv6-only node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
 The PREF64 Router Advertisement option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports NAT64 (PLAT) functionality.
-Therefore the node SHOULD enable CLAT if it receives an Router Advertisement containing PREF64 option.
+Therefore an IPv6-only node SHOULD enable CLAT as soon as an Router Advertisement containing PREF64 option is received.
 </t>
 <t>
 If RAs received by the node do not contain a PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
-In that case, the node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained an IPv4 address.
+When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
+In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the recursive resolvers provided by the network, not to the resolvers configured manually, local recursive resolvers etc.
+</t>
+<t>
+Any delay in enabling CLAT on an IPv6-only node would be impactful for IPv4-only applications, as such applications cannot benefit from 464XLAT until CLAT is operational. Therefore it's desirable that the node enables CLAT as soon as network support for PLAT is detected while IPv4 connectivity is not yet detected.
+
+The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained an IPv4 address.
+
+The node SHOULD NOT wait for an explicit (DHCP Option 108, ) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
+
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
+
+If IPv4 connectivity becomes available later, the node SHOULD disable CLAT as discussed in the following section.
 </t>
 <t>
 The node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
 </t>
-<section anchor="ipv4detect">
-<name>Detecting IPv4 Presence</name>
+
+</section>
+
+<section anchor="disable">
+<name>Disabling CLAT</name>
 <t>
 From a performance perspective, native IPv4 connectivity is preferrable over 464XLAT, so CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface.
-However, SLAAC might complete faster than DHCPv4. 
-The node SHOULD NOT wait for an explicit (DHCPv4 Option 108, <xref target="RFC8925"/>) or an implicit (DHCPv4 timeouts) indication that native IPv4 connectivity is not available.
-Such delay would be impactful for IPv4-only applications, as such applications cannot benefit from 464XLAT until CLAT is operational.
-Therefore, the node SHOULD enable CLAT as soon as network support for PLAT is detected while IPv4 connectivity is not yet detected. Clients SHOULD then disable CLAT if native IPv4 connectivity is established whether or not PLAT support from the network remains available.
 </t>
-</section>
+
+<t>
+It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
+The node SHOULD disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
+</t>
+<t>
+While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
+Because IPv4-only networks are inherently IPv6-ignorant, they might lack IPv6 layer2 security features, such as RA Guard. that would prevent spoofed RAs. 
+An attacker can send an RA containing the PREF64 option, while the network doesn't provide any PLAT functionality.
+If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be blackholed (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic [draft-ietf-pquip-pqc-engineers Section 8] ).
+Rogue RAs can also disturb traffic to destinations that support both IPv4 and IPv6 by causing IPv6 through an attacker's PLAT to be used instead of the legitimate network owner's IPv4 path.
+</t>
 </section>
 
 <section anchor="addr">
@@ -281,13 +309,6 @@ When a new session is created by the CLAT instance, the instance SHOULD comply w
 </section>
 
 </section>
-</section>
-<section anchor="disable">
-<name>Disabling CLAT</name>
-<t>
-The node MAY choose to turn CLAT off if an IPv4 address becomes available after CLAT has started.
-However, turning it off would affect all applications and traffic flows already utilizing CLAT.
-</t>
 </section>
 <section anchor="update">
 <name>
@@ -445,6 +466,7 @@ This document does not introduce any privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6877.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7050.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7335.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8880.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8028.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
@@ -464,11 +486,12 @@ This document does not introduce any privacy considerations.
 
       </references>
     </references>
+
     
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Lorenzo Colitti, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
 </t>
     </section>
     
