@@ -187,14 +187,14 @@ From a performance perspective, native IPv4 connectivity is preferrable over 464
 
 <t>
 It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
-The node SHOULD disable CLAT immidiately upon obtaining an IPv4 address via DHCP or manual configuration.
+The node SHOULD disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
 </t>
 <t>
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
-IPv4-only networks might also lack IPv6 layer2 security features, such as RA Guard. 
+Because IPv4-only networks are inherently IPv6-ignorant, they might lack IPv6 layer2 security features, such as RA Guard. that would prevent spoofed RAs. 
 An attacker can send an RA containing the PREF64 option, while the network doesn't provide any PLAT functionality.
-If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic will be blackholed.
-As rogue RAs can also disturb traffic to IPv6-enabled destinations, it is very much desirable to ensure that IPv4 traffic is unaffected.
+If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be blackholed (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic [draft-ietf-pquip-pqc-engineers Section 8] ).
+Rogue RAs can also disturb traffic to destinations that support both IPv4 and IPv6 by causing IPv6 through an attacker's PLAT to be used instead of the legitimate network owner's IPv4 path.
 </t>
 </section>
 
