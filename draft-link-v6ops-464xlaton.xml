@@ -163,10 +163,15 @@ When discovering the NAT64 prefix using the mechanism defined in <xref target="R
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the recursive resolvers provided by the network, not to the resolvers configured manually, local recursive resolvers etc.
 </t>
 <t>
+Any delay in enabling CLAT on an IPv6-only node would be impactful for IPv4-only applications, as such applications cannot benefit from 464XLAT until CLAT is operational. Therefore it's desirable that the node enables CLAT as soon as network support for PLAT is detected while IPv4 connectivity is not yet detected.
+
 The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained an IPv4 address.
-The node SHOULD NOT wait for an explicit (DHCP Option 108, <xref target="RFC8925"/>) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
-Such delay would be impactful for IPv4-only applications, as such applications cannot benefit from 464XLAT until CLAT is operational.
-Therefore, the node SHOULD enable CLAT as soon as network support for PLAT is detected while IPv4 connectivity is not yet detected. If IPv4 connectivity becomes available later, the node SHOULD disable CLAT as discussed in the following section.
+
+The node SHOULD NOT wait for an explicit (DHCP Option 108, ) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
+
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
+
+If IPv4 connectivity becomes available later, the node SHOULD disable CLAT as discussed in the following section.
 </t>
 <t>
 The node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
