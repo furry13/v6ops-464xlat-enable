@@ -160,6 +160,7 @@ Therefore an IPv6-only node SHOULD enable CLAT as soon as an Router Advertisemen
 <t>
 If RAs received by the node do not contain a PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
+Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the recursive resolvers provided by the network, not to the resolvers configured manually, local recursive resolvers etc.
 </t>
 <t>
@@ -296,12 +297,12 @@ The CLAT instance SHOULD obtain a dedicated IPv6 address from each prefix used t
 <ul>
 <li>
 <t>
-All packets of the session MUST be translated to the same IPv6 address.
+All packets with the same IPv4 5-tuple MUST be translated to the same IPv6 address.
 </t>
 </li>
 <li>
 <t>
-When a new session is created by the CLAT instance, the instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
+When translation for a new IPv4 5-tuple is performed by the CLAT instance, the instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
 </t>
 </li>
 </ul>
