@@ -148,8 +148,8 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 <name>Enabling CLAT</name>
 
 <t>
-For performance and security reasons CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface. 
-Therefore recommendations provided in this section are applicable to an IPv6-only node (a node which does not obtain an IPv4 address via DHCP or static configuration).
+For performance and security reasons CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface.
+Therefore recommendations provided in this section are only applicable to an IPv6-only node (a node which does not obtain a non-link-local (<xref target="RFC3927"/>) IPv4 address via DHCP or static configuration).
 </t>
 
 <t>
@@ -182,10 +182,6 @@ The node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> 
 
 <section anchor="disable">
 <name>Disabling CLAT</name>
-<t>
-From a performance perspective, native IPv4 connectivity is preferrable over 464XLAT, so CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface.
-</t>
-
 <t>
 It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
 The node SHOULD disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
@@ -437,6 +433,11 @@ If the attacker intercepts traffic for the NAT64 prefix (e.g. by providing the v
 <t>
 Using the PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks, as the attacker needs to be on-link and be able to bypass layer-2 security features such as RA Guard.
 </t>
+<t>
+In networks lacking explicit IPv6 deployment, administrators may inadvertently expose link-local IPv6 connectivity when endpoints have IPv6 enabled.
+This unintended exposure can facilitate PLAT presence signal falsification, enabling malicious actors to conduct Man-in-the-Middle (MitM) or Denial-of-Service (DoS) attacks.
+To mitigate this risk, it is recommended to disable CLAT upon detecting native IPv4 connectivity, as outlined in <xref target="disable"/>.
+</t>
     </section>
 
     <section anchor="privacy">
@@ -634,7 +635,7 @@ This document does not introduce any privacy considerations.
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Ed Horley, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
 </t>
     </section>
     
