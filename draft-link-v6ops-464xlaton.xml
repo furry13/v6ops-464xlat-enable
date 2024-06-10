@@ -449,7 +449,7 @@ Using the PREF64 RA option to detect PLAT presence and the NAT64 prefix is less 
 <t>
 In networks lacking explicit IPv6 deployment, administrators may inadvertently expose link-local IPv6 connectivity when endpoints have IPv6 enabled.
 This unintended exposure can facilitate PLAT presence signal falsification, enabling malicious actors to conduct Man-in-the-Middle (MitM) or Denial-of-Service (DoS) attacks.
-To mitigate this risk, it is recommended to disable CLAT upon detecting native IPv4 connectivity, as outlined in <xref target="disable"/>.
+This document mitigates this risk by requiring endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
 </t>
     </section>
 
