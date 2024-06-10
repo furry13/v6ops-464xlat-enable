@@ -76,14 +76,14 @@ This document provides recommendations on when a node shall enable or disable CL
     <section>
       <name>Introduction</name>
 <t>
-464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where a mobile phone performs the CLAT function, providing a private IPv4 address and IPv4 default route for the applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to migrate User Equipment (UE) devices (also known as mobile phones) to IPv6-only mode, where those devices are only assigned IPv6 addresses.
+464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing a private IPv4 address and default route for the applications and tethered devices.
+Enabling 464XLAT allowed mobile operators to transition UE devices (also known as mobile phones) to IPv6-only mode, where those devices are only assigned IPv6 addresses on their WAN interfaces.
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
-Even if the network provides PLAT in the form of NAT64, hosts like desktops and laptops still need the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
-However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode.
-Networks such as public Wi-Fi, enterprise networks, or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
+Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops etc) still needed the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
+However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode, while stil providing IPv4 as a service via 464XLAT.
+Networks such as Wi-Fi hotspots, enterprise networks or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
 <ul>
 <li>
@@ -102,7 +102,7 @@ Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target=
 
 <t>
 For both scenarios to work, the node performing CLAT (such as a host or a CPE router) need to enable the CLAT when connecting to an IPv6-only network.
-This document complements <xref target="RFC6877"/> by  providing recommendations for the node developers on enabling and disabling CLAT functions.
+This document complements <xref target="RFC6877"/> and updates <xref target="RFC8585"/> by  providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
     </section>
@@ -148,13 +148,13 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 <name>Enabling CLAT</name>
 
 <t>
-For performance and security reasons CLAT SHOULD NOT be enabled if the node has IPv4 connectivity over the given interface.
+For performance and security reasons CLAT MUST NOT be enabled if the node has IPv4 connectivity over the given interface.
 Therefore recommendations provided in this section are only applicable to an IPv6-only node (a node which does not obtain a non-link-local (<xref target="RFC3927"/>) IPv4 address via DHCP or static configuration).
 </t>
 
 <t>
 To enable CLAT, an IPv6-only node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
-The PREF64 Router Advertisement option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports NAT64 (PLAT) functionality.
+The PREF64 Router Advertisement option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
 Therefore an IPv6-only node SHOULD enable CLAT as soon as an Router Advertisement containing PREF64 option is received.
 </t>
 <t>
@@ -166,16 +166,16 @@ In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sen
 <t>
 Any delay in enabling CLAT on an IPv6-only node would be impactful for IPv4-only applications, as such applications cannot benefit from 464XLAT until CLAT is operational. Therefore it's desirable that the node enables CLAT as soon as network support for PLAT is detected while IPv4 connectivity is not yet detected.
 
-The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained an IPv4 address.
+The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that time the node has already obtained a non-link-local IPv4 address.
 
-The node SHOULD NOT wait for an explicit (DHCP Option 108, ) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
+The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
 
 However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
 
-If IPv4 connectivity becomes available later, the node SHOULD disable CLAT as discussed in the following section.
+If IPv4 connectivity becomes available later, the node MUST disable CLAT as discussed in the following section.
 </t>
 <t>
-The node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
+If the node supports multiple IPv4 continuity solutions, the node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
 </t>
 
 </section>
@@ -184,7 +184,7 @@ The node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> 
 <name>Disabling CLAT</name>
 <t>
 It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
-The node SHOULD disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
+The node MUST disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
 </t>
 <t>
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
@@ -206,7 +206,7 @@ CLAT Addresses Considerations
 CLAT IPv4 Addresses
 </name>
 <t>
-There are two different models in 464xlat deployments:
+There are two different models in 464XLAT deployments:
 </t>
 <ul>
 <li>
@@ -215,13 +215,14 @@ A dedicated prefix model, which Section 4.1 of <xref target="RFC6877"/> calls "w
 In that case, the node performing CLAT functions also extends the network downstream and provides network connectivity services to other connected systems.
 Those systems can be physical (e.g. various clients connected to a CPE router), or logical (e.g. virtual systems running on a node, while the host system acts as a router and performs CLAT). 
 In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses.
+Despite the word "wireline", this architecure is applicable for wireless or 3GPP routers: such router can provide IPv4 connectivity to connected devices, performing CLAT functions for traffic sent/received via the IPv6-only uplink interface.
 </t>
 </li>
 <li>
 <t>
 A single-address model, which section 4.2 of <xref target="RFC6877"/> calls "wireless network architecture".
 In that case, the CLAT instance provides an IPv4 address and the default route to the local node's network stack only.
-It should be noted that <xref target="RFC6877"/> implies that the second deployment scenario is limited to 3GPP cases, while currently it is also deployed in other types of networks, such as enterprise and public Wi-Fi networks, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
+It should be noted that <xref target="RFC6877"/> implies that the second deployment scenario is limited to 3GPP cases, while currently it is also deployed in other types of networks, such as enterprise networks and Wi-Fi hotspots, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
 Despite the word "wireless" in the name, this architecure is applicable for wired networks as well (e.g. desktops or servers using wired connections).
 </t>
 </li>
@@ -252,14 +253,19 @@ CLAT IPv6 Addresses
 </name>
 <t>
 Section 6.3 of <xref target="RFC6877"/> recommends that the CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD.
-However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, to say the least.
-In most cases, the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated bt CLAT. 
+However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in envinronments like enterprise networks, WiFi hotspots etc. 
+Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated bt CLAT. 
+In particular, in a single address model (see <xref target="v4addr"/>) the CLAT instance only need a single CLAT IPv6 address.
+Even in a dedciate prefix model the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT. 
 </t>
 <t>
 The CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
 This is required as when the node receives a packet from a NAT64 source, the node needs to differentiate between native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
 For example, an ICMPv6 Echo Reply packet from 64:ff9b::203.0.113.1 can be a response to either an IPv6 ping to 64:ff9b::203.0.113.1, or an IPv4 ping to 203.0.113.1, translated by CLAT.
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state and operate in the stateless mode (see Section 1.3 of <xref target="RFC6145"/>.
+</t>
+<t>
+In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
 In accordance with Section 5.4 of <xref target="RFC4862"/>, the node MUST perform Duplicate Address Detection for each dedicated CLAT address.
@@ -288,7 +294,7 @@ To achieve that, the node SHOULD generate a random checksum-neutral CLAT address
 <section anchor="mhoming">
 <name>CLAT and Multiple Prefixes per Interface</name>
 <t>
-The CLAT instance SHOULD obtain a dedicated IPv6 address from each prefix used to configure IPv6 addresses on the given interface. When selecting an address to be used as a source address for the translated packet, the following rules are applied:
+The CLAT instance SHOULD obtain a dedicated IPv6 address (or addresses, if a dedicated prefix model is used) from each prefix used to configure IPv6 addresses on the given interface. When selecting an address to be used as a source address for the translated packet, the following rules are applied:
 </t>
 <ul>
 <li>
@@ -352,12 +358,30 @@ OLD TEXT:
                Synthesis") in order to discover the provider-side
                translator (PLAT) translation IPv4 and IPv6
                prefix(es)/suffix(es). </t>
+<t>
+===
+</t>
+<t>
+NEW TEXT:
+</t>
+<t>
+===
+</t>
+<t>464XLAT-4: The IPv6 Transition CE Router MUST implement <xref target="RFC8781"/> ("Discovering PREF64 in Router Advertisements") and <xref target="RFC7050"/>
+               ("Discovery of the IPv6 Prefix Used for IPv6 Address
+               Synthesis") in order to discover the provider-side
+               translator (PLAT) translation IPv4 and IPv6
+               prefix(es)/suffix(es). </t>
+<t>
+===
+</t>
 
-<t>464XLAT-5: If PCP is implemented, the IPv6 Transition CE Router MUST
-               follow <xref target="RFC7225"/> ("Discovering NAT64 IPv6 Prefixes Using
-               the Port Control Protocol (PCP)") in order to learn the
-               PLAT-side translation IPv4 and IPv6 prefix(es)/suffix(es)
-               used by an upstream PCP-controlled NAT64 device. </t>
+<t>
+OLD TEXT:
+</t>
+<t>
+===
+</t>
 
 <t>464XLAT-6:  If the network provides several choices for the
                discovery/learning of the NAT64 prefix, the priority to
@@ -382,17 +406,6 @@ NEW TEXT
 <t>
 ===
 </t>
-<t>464XLAT-4: The IPv6 Transition CE Router MUST implement <xref target="RFC8781"/> ("Discovering PREF64 in Router Advertisements") and <xref target="RFC7050"/>
-               ("Discovery of the IPv6 Prefix Used for IPv6 Address
-               Synthesis") in order to discover the provider-side
-               translator (PLAT) translation IPv4 and IPv6
-               prefix(es)/suffix(es). </t>
-
-<t>464XLAT-5: If PCP is implemented, the IPv6 Transition CE Router MUST
-               follow <xref target="RFC7225"/> ("Discovering NAT64 IPv6 Prefixes Using
-               the Port Control Protocol (PCP)") in order to learn the
-               PLAT-side translation IPv4 and IPv6 prefix(es)/suffix(es)
-               used by an upstream PCP-controlled NAT64 device. </t>
 
 <t>464XLAT-6:  If the network provides several choices for the
                discovery/learning of the NAT64 prefix, the priority to
@@ -635,7 +648,7 @@ This document does not introduce any privacy considerations.
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Ed Horley, Ted Lemon, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Ed Horley, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund for the discussions, the input and all contribution.
 </t>
     </section>
     
