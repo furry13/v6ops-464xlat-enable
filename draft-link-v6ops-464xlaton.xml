@@ -254,7 +254,7 @@ CLAT IPv6 Addresses
 <t>
 Section 6.3 of <xref target="RFC6877"/> recommends that the CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments like enterprise networks, Wi-Fi hotspots, etc. 
-Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated bt CLAT. 
+Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
 In particular, in a single address model (see <xref target="v4addr"/>) the CLAT instance only need a single CLAT IPv6 address.
 Even in a dedicated prefix model, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT. 
 </t>
