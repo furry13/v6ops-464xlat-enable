@@ -24,7 +24,7 @@
   xml:lang="en"
   version="3">
   <front>
-<title abbrev="claton">464 Customer-side Translator (CLAT): Node Recommendations</title>
+<title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
     <seriesInfo name="Internet-Draft" value="draft-link-v6ops-claton-03"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
@@ -648,7 +648,7 @@ This document does not introduce any privacy considerations.
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Ed Horley, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund for the discussions, the input, and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund for the discussions, the input, and all contribution.
 </t>
     </section>
     
