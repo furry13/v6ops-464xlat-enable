@@ -172,7 +172,7 @@ The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP 
 
 However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
 
-If IPv4 connectivity becomes available later, the node MUST disable CLAT as discussed in the following section.
+If IPv4 connectivity becomes available later, the node MUST disable CLAT (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
 <t>
 If the node supports multiple IPv4 continuity solutions, the node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
@@ -184,7 +184,7 @@ If the node supports multiple IPv4 continuity solutions, the node MUST follow re
 <name>Disabling CLAT</name>
 <t>
 It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
-The node MUST disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
+Unless explicitly configured otherwise, the node MUST disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
 </t>
 <t>
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
@@ -192,6 +192,9 @@ Because IPv4-only networks are inherently IPv6-ignorant, they might lack IPv6 la
 An attacker can send an RA containing the PREF64 option, while the network doesn't provide any PLAT functionality.
 If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be blackholed (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic [draft-ietf-pquip-pqc-engineers Section 8] ).
 Rogue RAs can also disturb traffic to destinations that support both IPv4 and IPv6 by causing IPv6 through an attacker's PLAT to be used instead of the legitimate network owner's IPv4 path.
+</t>
+<t>
+There are some corner cases when the administrator might prefer the node to use CLAT even if the native IPv4 connectivity is available (e.g. for performance reasons, if IPv4 as a Service performs better than native IPv4). However for the reasons described above such behaviour MUST be explicitly enabled by the administrator via a configuration knob and MUST NOT be a default behaviour, especially for unmanaged nodes.
 </t>
 </section>
 
@@ -412,6 +415,10 @@ NEW TEXT
                use one or the other MUST follow this order: 1)<xref target="RFC7225"/> 2)<xref target="RFC8781"/>
                and 3) <xref target="RFC7050"/>.</t>
 <t>
+464XLAT-7: If the IPv6 Transition CE Router performs CLAT functions it SHOULD
+           also  include the PLAT prefix  in Router Advertisements (<xref target="RFC8781"/>) sent via the LAN interfaces. If the IPv6 Transition CE Router acts as a DHCP server it SHOULD enable DHCP Option 108 (<xref target="RFC8925"/>) processing. The router SHOULD have a configuration knob to disable DHCP Option 108 processing.  </t>
+<t>
+
    <xref target="RFC8781"/> allows the service provider to signal NAT64 prefix independently from DNS64 presence.
    At the same time the NAT64 prefix could be discovered by means of the method defined
    in <xref target="RFC7050"/> only if the service provider uses DNS64 [RFC6147].  It
