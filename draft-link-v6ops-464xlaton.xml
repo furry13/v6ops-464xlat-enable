@@ -124,12 +124,17 @@ Terminology
 <ul>
 <li>
 <t>
+CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g. one CLAT instance per interface).
+</t>
+</li>
+<li>
+<t>
 IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 ((<xref target="RFC6146"/>). In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it's required by the 464XLAT architecture (<xref target="RFC6877"/>).
 </t>
 </li>
 <li>
 <t>
-CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g. one CLAT instance per interface).
+Native IPv4 (such as in 'native IPv4 connectivity' or 'native IPv4 default gateway'): IPv4 connectivity or default gateway provided by the network without using any form of IPv4-as-a-service or translation mechanisms (such as 464XLAT).
 </t>
 </li>
 </ul>
@@ -170,7 +175,7 @@ The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that t
 
 The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
 
-However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>) only. The delay is implementation specific.
 
 If IPv4 connectivity becomes available later, the node MUST disable CLAT (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
