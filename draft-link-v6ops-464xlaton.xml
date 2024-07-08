@@ -77,13 +77,13 @@ This document provides recommendations on when a node shall enable or disable CL
       <name>Introduction</name>
 <t>
 464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing a private IPv4 address and default route for the applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to transition UE devices (also known as mobile phones) to IPv6-only mode, where those devices are only assigned IPv6 addresses on their WAN interfaces.
+Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where those devices are only assigned IPv6 addresses on their WAN interfaces.
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
 Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops etc) still needed the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
 However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode, while stil providing IPv4 as a service via 464XLAT.
-Networks such as Wi-Fi hotspots, enterprise networks or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
+Networks such as public Wi-Fi, enterprise networks or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
 <ul>
 <li>
@@ -91,7 +91,7 @@ Networks such as Wi-Fi hotspots, enterprise networks or even home networks can d
 </li>
 <li>
 <t>
-CLAT is performed by the host itself.
+CLAT is performed by the UA itself.
 </t>
 </li>
 </ul>
@@ -121,7 +121,15 @@ This document complements <xref target="RFC6877"/> and updates <xref target="RFC
 <name>
 Terminology
 </name>
+<t>
+This document reuses most of Terminology section from <xref target="RFC6877"/>.
+</t>
 <ul>
+<li>
+<t>
+CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g. one CLAT instance per interface).
+</t>
+</li>
 <li>
 <t>
 IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 ((<xref target="RFC6146"/>). In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it's required by the 464XLAT architecture (<xref target="RFC6877"/>).
@@ -129,10 +137,15 @@ IPv6-only network: A network that does not assign IPv4 addresses to hosts and fa
 </li>
 <li>
 <t>
-CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g. one CLAT instance per interface).
+Native IPv4 (such as in 'native IPv4 connectivity' or 'native IPv4 default gateway'): IPv4 connectivity or default gateway provided by the network without using any form of IPv4-as-a-service or translation mechanisms (such as 464XLAT).
 </t>
 </li>
 </ul>
+
+<t>
+Currently the only avalable form of PLAT for 464XLAT deployments is NAT64.
+Therefore this document uses those terms interchangeably.
+</t>
 </section>
 <section anchor="multihomed">
 <name>Multiple Interfaces Considerations</name>
@@ -170,7 +183,7 @@ The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that t
 
 The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
 
-However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>). The delay is implementation specific.
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>) only. The delay is implementation specific.
 
 If IPv4 connectivity becomes available later, the node MUST disable CLAT (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
