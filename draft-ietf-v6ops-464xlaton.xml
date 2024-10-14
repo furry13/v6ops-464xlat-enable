@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-ietf-v6ops-claton-00"
+  docName="draft-ietf-v6ops-claton-01"
   ipr="trust200902"
   obsoletes=""
   updates="8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-00"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-01"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -62,9 +62,9 @@
 
     <abstract>
  <t>
-464XLAT (<xref target="RFC6877"/>) defines an architecture for providing IPv4 connectivity across an IPv6-only network.
+464XLAT [RFC6877] defines an architecture for providing IPv4 connectivity across an IPv6-only network.
 The solution  contains two key elements: provider-side translator (PLAT) and customer-side translator (CLAT).
-This document provides recommendations on when a node shall enable or disable CLAT.
+This document complements [RFC6877] and updates [RFC8585] by providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
     </abstract>
