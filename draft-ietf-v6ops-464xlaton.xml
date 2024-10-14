@@ -245,7 +245,7 @@ Despite the word "wireless" in the name, this architecure is applicable for wire
 </li>
 </ul>
 <t>
-In the single-address model, the CLAT instance needs a single IPv4 CLAT address and a single IPv6 CLAT address only (that IPv6 address is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="v6addr"/>).
+In the single-address model, the CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="v6addr"/>).
 The node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions including but not limited to 464XLAT.
 If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
 This approach limits the number of CLAT instances per node to 8, which seems to be more that sufficient at the time of writing. 
