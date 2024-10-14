@@ -331,7 +331,7 @@ The CLAT instance SHOULD obtain a dedicated IPv6 address (or addresses, if a ded
 <ul>
 <li>
 <t>
-All packets with the same IPv4 5-tuple MUST be translated to the same valid (<xref target="RFC4862"/>) IPv6 address.
+All packets with the same IPv4 5-tuple MUST be translated to the same IPv6 address, as long as that address is valid (<xref target="RFC4862"/>) and assigned to the interface. 
 </t>
 </li>
 <li>
@@ -350,7 +350,7 @@ When translation for a new IPv4 5-tuple is performed by the CLAT instance, the i
 Updates to RFC8585
 </name>
 <t>
-This document makes the following changes to Section 3.2.1 of [RFC8585]:
+This document makes the following changes to Section 3.2.1 of <xref target="RFC8585"/>:
 </t>
 <t>
 OLD TEXT:
@@ -421,7 +421,7 @@ OLD TEXT:
                and 2) <xref target="RFC7050"/>.</t>
 <t>
    The NAT64 prefix could be discovered by means of the method defined
-   in <xref target="RFC7050"/> only if the service provider uses DNS64 [RFC6147].  It
+   in <xref target="RFC7050"/> only if the service provider uses DNS64 <xref target="RFC6147"/>.  It
    may be the case that the service provider does not use or does not
    trust DNS64 <xref target="RFC6147"/> because the DNS configuration at the CE (or
    hosts behind the CE) can be modified by the customer.  In that case,
@@ -493,7 +493,7 @@ This document mitigates this risk by requiring endpoints to disable CLAT when th
     <section anchor="privacy">
       <name>Privacy Considerations</name>
       <t>
-If the node utilizes the same CLAT address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, each CLAT instance's source IPv6 address SHOULD be rotated the same way as temporary IPv6 addresses (see <xref target="v6addr"/>).
+If the instance utilizes the same CLAT address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, each CLAT instance's source IPv6 address SHOULD be rotated the same way as temporary IPv6 addresses (see <xref target="v6addr"/>).
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT device.
