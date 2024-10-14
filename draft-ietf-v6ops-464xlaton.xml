@@ -353,7 +353,7 @@ MTU Considerations
 <t>
 The IPv4 header is 20 bytes long (or longer if IP options are present), while the IPv6 header is 40 bytes.
 This means that when CLAT translates an IPv4 packet to IPv6, it usually adds 20 bytes to the packet size.
-To minimize undesirable IP fragmentation (<xref target="RFC8900"/>), the CLAT instance in a single-address mode SHOULD present IPv4-only application with IPv4 MTU which is 20 bytes smaller than the IPv6 MTU of the interface the instance is running on.
+To minimize undesirable IP fragmentation (<xref target="RFC8900"/>), the CLAT instance in a single-address mode SHOULD present IPv4-only applications with an IPv4 MTU which is 20 bytes smaller than the IPv6 MTU of the interface the instance is running on.
 </t>
 </section>
 
