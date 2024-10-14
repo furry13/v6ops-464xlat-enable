@@ -291,7 +291,7 @@ In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address fo
 In accordance with Section 5.4 of <xref target="RFC4862"/>, the node MUST perform Duplicate Address Detection for each dedicated CLAT address.
 </t>
 <t>
-If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral for the given local IPv4 CLAT address and the NAT64 prefix (this means that the local IPv4 address needs to be assigned/known before the IPv6 one is configured).
+If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral for the given local IPv4 CLAT address and the NAT64 prefix (this means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured).
 Using a checksum-neutral CLAT address provides the following benefits:
 </t>
 <ul>
