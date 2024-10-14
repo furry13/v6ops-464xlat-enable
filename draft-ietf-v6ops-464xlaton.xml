@@ -493,7 +493,7 @@ This document mitigates this risk by requiring endpoints to disable CLAT when th
     <section anchor="privacy">
       <name>Privacy Considerations</name>
       <t>
-If the node utilizes the same CLAT address for extensive peroid of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectores can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD be rotated the same way as temporary IPv6 addresses (see <xref target="v6addr"/>).
+If the node utilizes the same CLAT address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, each CLAT instance's source IPv6 address SHOULD be rotated the same way as temporary IPv6 addresses (see <xref target="v6addr"/>).
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT device.
