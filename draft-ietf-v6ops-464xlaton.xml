@@ -162,7 +162,7 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 
 <t>
 For performance and security reasons CLAT MUST NOT be enabled if the node has IPv4 native connectivity over the given interface.
-Therefore recommendations provided in this section are only applicable to an IPv6-only node (a node which does not obtain a non-link-local (<xref target="RFC3927"/>) IPv4 address via DHCP or static configuration).
+Therefore recommendations provided in this section are only applicable to an IPv6-only node (a node which does not have a native IPv4 default route configured).
 </t>
 
 <t>
@@ -197,7 +197,7 @@ If the node supports multiple IPv4 continuity solutions, the node MUST follow re
 <name>Disabling CLAT</name>
 <t>
 It is possible that after the CLAT instance has started, native IPv4 becomes available (e.g. an IPv4 address received via DHCP).
-Unless explicitly configured otherwise, the node MUST disable CLAT immediately upon obtaining an IPv4 address via DHCP or a non-link-local (<xref target="RFC3927"/>) IPv4 address through manual or automated fallback configuration.
+Unless explicitly configured otherwise, the node MUST disable CLAT immediately upon obtaining a native IPv4 default gateway.
 </t>
 <t>
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
@@ -626,7 +626,7 @@ To summarize, this document does not introduce any new privacy considerations.
 <polygon class="arrowhead" points="88,208 76,202.4 76,213.6" fill="black" transform="rotate(90,80,208)"/>
 <g class="text">
 <text x="312" y="100">YES</text>
-<text x="148" y="116">Has non-link-local IPv4 address?</text>
+<text x="148" y="116">Has native IPv4 default route?</text>
 <text x="480" y="116">CLAT Disabled</text>
 <text x="188" y="164">NO</text>
 <text x="484" y="180">NO</text>
@@ -654,7 +654,7 @@ To summarize, this document does not introduce any new privacy considerations.
                     v                                         |             
 +----------------------------------+        +-----------------+------------+
 |                                  | YES    |                              |
-| Has non-link-local IPv4 address? +------> |        CLAT Disabled         |
+| Has native IPv4 default route?   +------> |        CLAT Disabled         |
 |                                  |        |                              |
 +------------------+---------------+        +------------------------------+
                    |  NO                                 ^               ^  
