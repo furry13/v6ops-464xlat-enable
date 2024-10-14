@@ -203,7 +203,7 @@ Unless explicitly configured otherwise, the node MUST disable CLAT immediately u
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
 Because IPv4-only networks are inherently IPv6-ignorant, they might lack IPv6 layer2 security features, such as RA Guard. that would prevent spoofed RAs. 
 An attacker can send an RA containing the PREF64 option, while the network doesn't provide any PLAT functionality.
-If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be dropped (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic, Section 8 of <xref target="I-D.ietf-pquip-pqc-engineers"/>).
+If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be dropped (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic, see Section 8 of <xref target="I-D.ietf-pquip-pqc-engineers"/>).
 
 Rogue RAs can also disturb traffic to destinations that support both IPv4 and IPv6 by causing IPv6 through an attacker's PLAT to be used instead of the legitimate network owner's IPv4 path.
 </t>
