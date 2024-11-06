@@ -148,11 +148,20 @@ Therefore this document uses those terms interchangeably.
 </t>
 </section>
 <section anchor="multihomed">
-<name>Multiple Interfaces Considerations</name>
+<name>Multiple Interfaces and Multiple Routers Considerations</name>
 <t>
 A node may have multiple IPv6-only interfaces (for example, a mobile phone can be connected to an IPv6-only Wi-Fi network and to an IPv6-only mobile network).
 In that case the node SHOULD run an independent, dedicated CLAT instance on each interface connected to a network equipped with PLAT.
-Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
+</t>
+<t>
+A node discovering multiple routers on the same interface signalling the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance for these and use default router selection as described in Section 6.3.6 of <xref target="RFC4861"/>.  
+</t>
+<t>
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tupel of PIOs and NAT64 prefix recieved to be consistent with Section 3 of <xref target="RFC8028"/>,
+or only a singe CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router.  
+</t>
+<t>
+Consequently, each CLAT instance SHOULD install a separate default IPv4 route for each CLAT instance.
 The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default routes.
 </t>
 </section>
