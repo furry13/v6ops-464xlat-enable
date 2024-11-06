@@ -166,7 +166,7 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 </t>
 </section>
 
-    <section anchor="enable">
+<section anchor="enable">
 <name>Enabling CLAT</name>
 
 <t>
@@ -333,7 +333,7 @@ To achieve that, the node SHOULD generate a random checksum-neutral CLAT address
 </ul>
 
 <section anchor="mhoming">
-<name>CLAT and Multiple Prefixes per Interface</name>
+<name>CLAT and Multiple Prefixes per Router</name>
 <t>
 The CLAT instance SHOULD obtain a dedicated IPv6 address (or addresses, if a dedicated prefix model is used) from each global prefix used to configure IPv6 addresses on the given interface. When selecting an address to be used as a source address for the translated packet, the following rules are applied:
 </t>
@@ -345,7 +345,13 @@ All packets with the same IPv4 5-tuple MUST be translated to the same IPv6 addre
 </li>
 <li>
 <t>
-When translation for a new IPv4 5-tuple is performed by the CLAT instance, the instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
+When translation for a new IPv4 5-tuple is performed by the CLAT instance, the IPv6 address SHOULD be chosen according to the policy from Section 2.1 of <xref target="RFC6724"/>using the IPv6 addresses of the CLAT instance as source candidates and the translated destination address.
+</t>
+</li>
+<li>
+<t>
+The instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. 
+This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
 </t>
 </li>
 </ul>
