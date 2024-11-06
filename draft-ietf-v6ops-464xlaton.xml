@@ -157,7 +157,7 @@ In that case the node SHOULD run an independent, dedicated CLAT instance on each
 A node discovering multiple routers on the same interface signalling the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance for these and use default router selection as described in Section 6.3.6 of <xref target="RFC4861"/>.  
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tupel of PIOs and NAT64 prefix recieved to be consistent with Section 3 of <xref target="RFC8028"/>,
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix received to be consistent with Section 3 of <xref target="RFC8028"/>,
 or only a singe CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router.  
 </t>
 <t>
