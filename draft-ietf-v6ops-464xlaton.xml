@@ -307,21 +307,9 @@ That improves the chances of the protocol working via CLAT even if CLAT is not a
 </ul>
 
 <t>
-The node SHOULD treat SLAAC-generated CLAT addresses as temporary addresses (<xref target="RFC8981"/>). In particular:
+To protect user privacy and prevent user tracking through CLAT addresses, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks, even if the NAT64 prefix and the local IPv4 CLAT address do not change. 
+In particular, the node SHOULD generate a random CLAT address every time the network attachement changes to another network.
 </t>
-<ul>
-<li>
-<t>
-The node SHOULD generate new CLAT addresses over time, as described in Sections 3.4 and 3.6 of <xref target="RFC8981"/>.
-</t>
-</li>
-<li>
-<t>
-The node SHOULD generate a different interface id for the CLAT address when connecting to different networks, even if the NAT64 prefix and the local IPv4 CLAT address do not change. 
-To achieve that, the node SHOULD generate a random checksum-neutral CLAT address every time the network attachement changes to another network.
-</t>
-</li>
-</ul>
 
 <section anchor="mhoming">
 <name>CLAT and Multiple Prefixes per Interface</name>
