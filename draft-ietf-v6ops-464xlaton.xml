@@ -288,8 +288,21 @@ Using a dedicated IPv6 source address for CLAT traffic allows the node to make t
 In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
-In accordance with Section 5.4 of <xref target="RFC4862"/>, the node MUST perform Duplicate Address Detection for each dedicated CLAT address.
+The node MUST comply with  <xref target="RFC4861"/> and  <xref target="RFC4862"/> for the node CLAT addresses. In particular:
 </t>
+<ul>
+<li>
+<t>
+Performing Duplicate Address Detection for each dedicated CLAT address (Section 5.4 of <xref target="RFC4862"/>);
+</t>
+</li>
+<li>
+<t> Process received Neighbor Solicitations sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.</t>
+</li>
+<li>
+<t>Sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
+</li>
+</ul>
 <t>
 If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral for the given local IPv4 CLAT address and the NAT64 prefix (this means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured).
 Using a checksum-neutral CLAT address provides the following benefits:
@@ -523,6 +536,8 @@ To summarize, this document does not introduce any new privacy considerations.
         
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3927.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4861.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6146.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6147.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6333.xml"/>
@@ -538,6 +553,7 @@ To summarize, this document does not introduce any new privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8585.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8981.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9131.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
@@ -545,7 +561,6 @@ To summarize, this document does not introduce any new privacy considerations.
       <references>
 	      <name>Informative References</name>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1918.xml"/>
-        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6145.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7225.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8900.xml"/>
