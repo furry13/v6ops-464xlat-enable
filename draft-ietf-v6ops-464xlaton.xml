@@ -288,7 +288,7 @@ Using a dedicated IPv6 source address for CLAT traffic allows the node to make t
 In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
-The node MUST comply with  <xref target="RFC4861"/> and  <xref target="RFC4862"/> for the node CLAT addresses. In particular:
+The node MUST treat the CLAT addresses as any other addresses and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
 </t>
 <ul>
 <li>
@@ -297,10 +297,13 @@ Performing Duplicate Address Detection for each dedicated CLAT address (Section 
 </t>
 </li>
 <li>
-<t> Process received Neighbor Solicitations sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.</t>
+<t> Processing received Neighbor Solicitations sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.</t>
 </li>
 <li>
 <t>Sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
+</li>
+<li>
+Registering the CLAT addresses using DHCPv6 (<xref target="RFC9686"/>), if the network supports the registration.
 </li>
 </ul>
 <t>
@@ -554,6 +557,7 @@ To summarize, this document does not introduce any new privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8981.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9131.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9686.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
