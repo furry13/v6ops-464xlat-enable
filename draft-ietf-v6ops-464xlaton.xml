@@ -327,28 +327,97 @@ To protect user privacy and prevent user tracking through CLAT addresses, the no
 In particular, the node SHOULD generate a random CLAT address every time the network attachement changes to another network.
 </t>
 
+</section>
+</section>
+
 <section anchor="mhoming">
 <name>CLAT and Multiple Prefixes per Interface</name>
 <t>
-The CLAT instance SHOULD obtain a dedicated IPv6 address (or addresses, if a dedicated prefix model is used) from each global prefix used to configure IPv6 addresses on the given interface. When selecting an address to be used as a source address for the translated packet, the following rules are applied:
+IPv6 multihoming, particularly when multiple routers on the same link advertise different prefixes PIOs, presents a complex and not yet fully resolved challenge.
+</t>
+<t>
+When routers on a given link are managed independently (e.g., by different ISPs), the resulting set of configuration parameters received by a host can be difficult to utilize without creating a complex and fragile state machine. 
+For example, if router_A advertises a PIO with prefix_A and PREF64_A, while router_B advertises a PIO with prefix_B and a PREF64_B, it is crucial that the CLAT bundles the information received from each router.
+A CLAT instance must use PREF64_A and generate a CLAT address from prefix_A, sending translated packets to router_A.  Alternatively, it must use PREF64_B, generate an address from prefix_B, and send translated packets to router_B. 
+Mixing configuration information from different routers (e.g., generating a CLAT address from prefix_A but using PREF64_B for translation) can lead to packet loss.
+For example, if packets with source addresses from prefix_A are sent to router_B, that router (or the uplink network) might drop the packets according to BCP 38 (<xref target="RFC2827"/>).
+Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those packets are sent to router_B, that router might not be configured to translate packets for that prefix.
+</t>
+
+<t>
+This document does not aim to define CLAT behavior for every possible multi-router/multi-prefix scenario. Instead, this section provides recommendations for common scenarios, leaving numerous corner cases out of scope.
+</t>
+
+
+<t>
+A node discovering multiple routers on the same interface advertizing the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
+When multiple PIOs are advertized, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>) prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
+</t>
+<t>
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a singe CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertized by that router.  
+</t>
+
+<t>
+In both cases described above, if the node create a single CLAT instance only and a choice needs to be made between multiple PIOs, the mode SHOULD prefer non-ULA (<xref target="RFC4193"/>)  prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
+</t>
+
+<t>
+Creating a single CLAT instance significantly simplifies the CLAT state machine.
+However, this approach may concentrate all traffic from that instance onto the same first-hop router and NAT64 device in some multihomed topologies.
+As traffic shifts from CLAT to native IPv6, this drawback becomes less significant and does not justify the added complexity of multiple instances.
+</t>
+
+<section anchor="renumb">
+<name>
+Link Renumbering
+</name>
+
+<t>
+As discussed above, it is usually sifficient to create a single CLAT instance per interface, utilizing a single PIO, even if the link has multiple subnets assigned.
+However there is one particular scenario, when the prefix selection might have a significant impact on user experience: link renumbering.
+</t>
+<t>
+<xref target="RFC8978"/> discusses various examples of so-called flash renumbering, when the IPv6 prefix assigned to the link changes, without any explicit notification to the hosts. <xref target="I-D.ietf-6man-slaac-renum"/> and <xref target="I-D.link-6man-gulla"/> discuss possible approaches to minimize the flash renumbering impact.
+In a nutshell all those methods expect the host which has addresses from both old and new prefixes assigned, to stop using the old prefix and start using addresses from the new prefix. 
+For the node running CLAT instances it means that the instance(s) using addresses from the old prefix should be disabled, and an instance using an address from the new prefix should be created.
+</t>
+
+<t>
+The CLAT node SHOULD use at least the following signals to detect link renumbering events:
 </t>
 <ul>
 <li>
 <t>
-All packets with the same IPv4 5-tuple MUST be translated to the same IPv6 address, as long as that address is valid (<xref target="RFC4862"/>) and assigned to the interface. 
+A prefix used to form the CLAT address becomes deperecated or invalid (<xref target="RFC4862"/>).
 </t>
 </li>
 <li>
 <t>
-When translation for a new IPv4 5-tuple is performed by the CLAT instance, the instance SHOULD comply with requirements defined in Section 3 of <xref target="RFC8028"/>, in particular Sections 3.2 and 3.3 of <xref target="RFC8028"/>. This is needed to ensure that the CLAT is operational and selects the source IPv6 correctly in multihomed environments or if the link subnet has been changed (renumbered).
+The router (or routers) advertizing the PIO used to form the CLAT address</t>
+<ul>
+<li>
+<t> has changed it state from being reachable or probably reachable to being unknown or suspect (i.e., it's neighbor cache entry moved to the INCOMPLETE state or ceased to exist, see Section 6.3.6 of <xref target="RFC4861"/>).</t>
+</li>
+<li>
+<t>
+ceased to be a router (see Section 7.3.3 of  <xref target="RFC4861"/>).
 </t>
 </li>
 </ul>
+</li>
+</ul>
+
+<t>
+Upon receiving a signal indicating a possible renumbering event, the node SHOULD disable the CLAT instance(s) affected by the renumbering, and create new instance(s).
+In case of implicit signals (provided by the Neighbor Unreachability Detection, <xref target="RFC4861"/>, rather than by a Router Advertisement deprecating or invalidating a prefix), the node MAY send Router Solicitations to obtain the most up-to-date network configuration information.
+When sending Router Solicitations the node MUST follow recommendations specified in Section 6.3.7 of  <xref target="RFC4861"/>.
+The node MAY react to a potential renumebring event in a "make-before-break" manner, when old instances are still running until all required information to enable new ones becomes available.
+</t>
+</section>
+
 
 </section>
 
-</section>
-</section>
 
 <section>
 <name>
@@ -539,6 +608,7 @@ To summarize, this document does not introduce any new privacy considerations.
         
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3927.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4193.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4861.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6146.xml"/>
@@ -565,10 +635,14 @@ To summarize, this document does not introduce any new privacy considerations.
       <references>
 	      <name>Informative References</name>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1918.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2827.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6145.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7225.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8900.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8978.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-slaac-renum.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.link-6man-gulla.xml"/>
 
       </references>
     </references>
@@ -718,7 +792,7 @@ To summarize, this document does not introduce any new privacy considerations.
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
