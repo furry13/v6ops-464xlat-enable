@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-ietf-v6ops-claton-02"
+  docName="draft-ietf-v6ops-claton-03"
   ipr="trust200902"
   obsoletes=""
   updates="8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-02"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-03"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -47,7 +47,7 @@
         <email>tojens@microsoft.com</email>
       </address>
     </author>
-    <date year="2024"/>
+    <date year="2025"/>
 <area>Ops</area>
     <workgroup>IPv6 operations</workgroup>
     <keyword>ipv6</keyword>
@@ -607,7 +607,6 @@ To summarize, this document does not introduce any new privacy considerations.
         <name>Normative References</name>
         
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2119.xml"/>
-        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.3927.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4193.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4861.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.4862.xml"/>
