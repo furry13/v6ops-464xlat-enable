@@ -373,13 +373,14 @@ Link Renumbering
 </name>
 
 <t>
-As discussed above, it is usually sifficient to create a single CLAT instance per interface, utilizing a single PIO, even if the link has multiple subnets assigned.
-However there is one particular scenario, when the prefix selection might have a significant impact on user experience: link renumbering.
+As discussed above, a single CLAT instance per interface, using a single PIO, is typically sufficient, even if the link has multiple assigned subnets.
+However, PIO selection can significantly impact user experience during link renumbering. 
 </t>
 <t>
-<xref target="RFC8978"/> discusses various examples of so-called flash renumbering, when the IPv6 prefix assigned to the link changes, without any explicit notification to the hosts. <xref target="I-D.ietf-6man-slaac-renum"/> and <xref target="I-D.link-6man-gulla"/> discuss possible approaches to minimize the flash renumbering impact.
-In a nutshell all those methods expect the host which has addresses from both old and new prefixes assigned, to stop using the old prefix and start using addresses from the new prefix. 
-For the node running CLAT instances it means that the instance(s) using addresses from the old prefix should be disabled, and an instance using an address from the new prefix should be created.
+<xref target="RFC8978"/> discusses various examples of "flash renumbering," where the IPv6 prefix assigned to the link changes without explicit host notification. 
+
+<xref target="I-D.ietf-6man-slaac-renum"/> and <xref target="I-D.link-6man-gulla"/> discuss methods to mitigate the impact of flash renumbering.  These methods generally rely on hosts with addresses from both old and new prefixes ceasing use of the old prefix and adopting the new prefix.
+For nodes running CLAT instances, this requires disabling instances using addresses from the old prefix and creating an instance using an address from the new prefix.
 </t>
 
 <t>
