@@ -350,7 +350,7 @@ This document does not aim to define CLAT behavior for every possible multi-rout
 
 
 <t>
-A node discovering multiple routers on the same interface advertizing the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
+A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
 When multiple PIOs are advertized, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>) prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
 </t>
 <t>
