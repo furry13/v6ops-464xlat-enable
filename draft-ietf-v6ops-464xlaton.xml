@@ -354,7 +354,7 @@ A node discovering multiple routers on the same interface advertising the <em>sa
 When multiple PIOs are advertized, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>) prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a singe CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertized by that router.  
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertized by that router.  
 </t>
 
 <t>
