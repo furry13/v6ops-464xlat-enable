@@ -140,6 +140,11 @@ IPv6-only network: A network that does not assign IPv4 addresses to hosts and fa
 Native IPv4 (such as in 'native IPv4 connectivity' or 'native IPv4 default gateway'): IPv4 connectivity or default gateway provided by the network without using any form of IPv4-as-a-service or translation mechanisms (such as 464XLAT).
 </t>
 </li>
+<li>
+<t>
+ULA: Unique Local Addresses, <xref target="RFC4193"/>.
+</t>
+</li>
 </ul>
 
 <t>
@@ -351,15 +356,38 @@ This document does not aim to define CLAT behavior for every possible multi-rout
 
 <t>
 A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
-When multiple PIOs are advertized, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>) prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
 </t>
 <t>
 A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertized by that router.  
 </t>
 
 <t>
-In both cases described above, if the node creates a single CLAT instance only and a choice needs to be made between multiple PIOs, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>)  prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
+When a node creates a single CLAT instance and must choose between multiple PIOs, the node SHOULD select a single PIO using the same algorithm as for choosing the source address for a destination within the selected NAT64 prefix (<xref target="RFC6724"/>, updated by <xref target="I-D.ietf-6man-rfc6724-update"/>).</t>
+<t>Discussion: This approach, leveraging the default source address selection algorithm (Section 5 of <xref target="RFC6724"/>), typically results in the policy table (rule 6) and longest prefix match (rule 8) being used for prefix selection.
+This ensures CLAT address selection aligns with default source address selection for native IPv6 flows, offering the following advantages:
 </t>
+<ul>
+<li>
+<t>
+When using the well-known NAT64 prefix (64:ff9b::/96), non-ULA prefixes are preferred over ULA prefixes by default. This is beneficial as ULA source packets may not reach PLAT devices.
+</t>
+</li>
+<li>
+<t>
+For network-specific NAT64 prefixes within the known-local ULA range (<xref target="I-D.ietf-6man-rfc6724-update"/>), the ULA prefix is preferred. This can be advantageous in home and enterprise environments where administrators intend to perform NAT64 for specific source prefixes only.
+</t>
+</li>
+<li>
+<t>
+For network-specific NAT64 prefixes within the operator's global non-ULA range, the longest prefix match selects the PIO, ensuring CLAT uses the operator's source address for traffic to the operator's PLAT in multi-prefix environments.
+</t>
+</li>
+<li>
+<t>
+In managed environments, operators can customize CLAT behavior by modifying the policy table if the default prefix selection is unsuitable.
+</t>
+</li>
+</ul>
 
 <t>
 Creating a single CLAT instance significantly simplifies the CLAT state machine.
@@ -614,6 +642,7 @@ To summarize, this document does not introduce any new privacy considerations.
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6146.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6147.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6333.xml"/>
+	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6724.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6877.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7050.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7335.xml"/>
@@ -628,6 +657,7 @@ To summarize, this document does not introduce any new privacy considerations.
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8981.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9131.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9686.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-rfc6724-update.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
