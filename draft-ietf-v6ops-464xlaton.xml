@@ -358,7 +358,7 @@ A node discovering multiple routers on the same interface signalling the <em>dif
 </t>
 
 <t>
-In both cases described above, if the node create a single CLAT instance only and a choice needs to be made between multiple PIOs, the mode SHOULD prefer non-ULA (<xref target="RFC4193"/>)  prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
+In both cases described above, if the node creates a single CLAT instance only and a choice needs to be made between multiple PIOs, the node SHOULD prefer non-ULA (<xref target="RFC4193"/>)  prefixes to ULA prefixes (as packets from ULA sources might not reach PLAT devices).
 </t>
 
 <t>
