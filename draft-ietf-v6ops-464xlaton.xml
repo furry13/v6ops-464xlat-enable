@@ -63,7 +63,7 @@
     <abstract>
  <t>
 464XLAT [RFC6877] defines an architecture for providing IPv4 connectivity across an IPv6-only network.
-The solution  contains two key elements: provider-side translator (PLAT) and customer-side translator (CLAT).
+The solution contains two key elements: provider-side translator (PLAT) and customer-side translator (CLAT).
 This document complements [RFC6877] and updates [RFC8585] by providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
@@ -81,9 +81,9 @@ Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only 
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
-Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops etc) still needed the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
+Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops, etc.) still needed the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
 However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode, while still providing IPv4 as a service via 464XLAT.
-Networks such as public Wi-Fi, enterprise networks or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
+Networks such as public Wi-Fi, enterprise networks, or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
 <ul>
 <li>
@@ -102,7 +102,7 @@ Another 464XLAT deployment model is a Wireline one (section 4.1 of <xref target=
 
 <t>
 For both scenarios to work, the node performing CLAT (such as a host or a CPE router) need to enable the CLAT when connecting to an IPv6-only network.
-This document complements <xref target="RFC6877"/> and updates <xref target="RFC8585"/> by  providing recommendations for the node developers on enabling and disabling CLAT functions.
+This document complements <xref target="RFC6877"/> and updates <xref target="RFC8585"/> by providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
     </section>
@@ -173,7 +173,7 @@ Therefore recommendations provided in this section are only applicable to an IPv
 <t>
 To enable CLAT, an IPv6-only node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
 The PREF64 Router Advertisement (RA) option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
-Therefore an IPv6-only node SHOULD enable CLAT as soon as an Router Advertisement containing PREF64 option is received.
+Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement containing PREF64 option is received.
 </t>
 <t>
 If RAs received by the node do not contain a PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
@@ -205,7 +205,7 @@ It is possible that after the CLAT instance has started, native IPv4 becomes ava
 Unless explicitly configured otherwise, the node MUST disable CLAT immediately upon obtaining a native IPv4 default gateway.
 </t>
 <t>
-While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from performance perspective, but also from security point of view.
+While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from a performance perspective, but also from a security point of view.
 Because IPv4-only networks are inherently IPv6-ignorant, they might lack IPv6 layer2 security features, such as RA Guard, that would prevent spoofed RAs. 
 An attacker can send an RA containing the PREF64 option, while the network doesn't provide any PLAT functionality.
 If the node keeps CLAT enabled and uses it for IPv4-only destinations, that traffic could be dropped (availability attack) or routed through an attacker-controlled route (active attack on insecure traffic or hoarding secure traffic for "Harvest Now, Decrypt Later" attacks for non-PQC secure traffic, see Section 8 of <xref target="I-D.ietf-pquip-pqc-engineers"/>).
@@ -237,7 +237,7 @@ A dedicated prefix model, which Section 4.1 of <xref target="RFC6877"/> calls "w
 In that case, the node performing CLAT functions also extends the network downstream and provides network connectivity services to other connected systems.
 Those systems can be physical (e.g. various clients connected to a CPE router), or logical (e.g. virtual systems running on a node, while the host system acts as a router and performs CLAT). 
 In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses.
-Despite the word "wireline", this architecure is applicable for wireless or 3GPP routers: such router can provide IPv4 connectivity to connected devices, performing CLAT functions for traffic sent/received via the IPv6-only uplink interface.
+Despite the word "wireline", this architecture is applicable for wireless or 3GPP routers: such router can provide IPv4 connectivity to connected devices, performing CLAT functions for traffic sent/received via the IPv6-only uplink interface.
 </t>
 </li>
 <li>
@@ -245,7 +245,7 @@ Despite the word "wireline", this architecure is applicable for wireless or 3GPP
 A single-address model, which section 4.2 of <xref target="RFC6877"/> calls "wireless network architecture".
 In that case, the CLAT instance provides an IPv4 address and the default route to the local node's network stack only.
 It should be noted that <xref target="RFC6877"/> implies that the second deployment scenario is limited to 3GPP cases, while currently it is also deployed in other types of networks, such as enterprise networks and Wi-Fi hotspots, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
-Despite the word "wireless" in the name, this architecure is applicable for wired networks as well (e.g. desktops or servers using wired connections).
+Despite the word "wireless" in the name, this architecture is applicable for wired networks as well (e.g. desktops or servers using wired connections).
 </t>
 </li>
 </ul>
@@ -293,7 +293,7 @@ Using a dedicated IPv6 source address for CLAT traffic allows the node to make t
 In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
-The node MUST treat the CLAT addresses as any other addresses and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
+The node MUST treat the CLAT addresses as any other address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
 </t>
 <ul>
 <li>
@@ -358,7 +358,7 @@ This document does not aim to define CLAT behavior for every possible multi-rout
 A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertized by that router.  
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
 </t>
 
 <t>
