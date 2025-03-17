@@ -290,8 +290,10 @@ For example, an ICMPv6 Echo Reply packet from 64:ff9b::203.0.113.1 can be a resp
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state and operate in the stateless mode (see Section 1.3 of <xref target="RFC6145"/>.
 </t>
 <t>
-In a dedicated prefix model, the instance MAY attempt to obtain a /64 prefix.
-If the instance chooses not to obtain a dedicated prefix or if the prefix is not available, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
+<xref target="RFC6877"/> suggests that the CLAT instance a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
+This document updates <xref target="RFC6877"/> recommendations.
+More specifically, obtaining a /64 just for translating is NOT RECOMMENDED even in a dedicated prefix model.
+However, an instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
 The node MUST treat the CLAT addresses as any other address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
