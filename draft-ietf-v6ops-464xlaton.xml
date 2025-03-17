@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-ietf-v6ops-claton-03"
+  docName="draft-ietf-v6ops-claton-04"
   ipr="trust200902"
   obsoletes=""
   updates="8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-03"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-04"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -167,7 +167,7 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 
 <t>
 For performance and security reasons CLAT MUST NOT be enabled if the node has IPv4 native connectivity over the given interface.
-Therefore recommendations provided in this section are only applicable to an IPv6-only node (a node which does not have a native IPv4 default route configured).
+Therefore recommendations provided in this section are only applicable to an IPv6-only interfaces of a given node (the node has no native IPv4 default route pointing to that interface).
 </t>
 
 <t>
