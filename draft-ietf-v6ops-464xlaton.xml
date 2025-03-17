@@ -167,7 +167,7 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 
 <t>
 For performance and security reasons CLAT MUST NOT be enabled if the node has IPv4 native connectivity over the given interface.
-Therefore recommendations provided in this section are only applicable to an IPv6-only interfaces of a given node (the node has no native IPv4 default route pointing to that interface).
+Therefore recommendations provided in this section are only applicable to the IPv6-only interfaces of a given node (the node has no native IPv4 default route pointing to that interface).
 </t>
 
 <t>
