@@ -19,7 +19,7 @@
   docName="draft-ietf-v6ops-claton-04"
   ipr="trust200902"
   obsoletes=""
-  updates="8585"
+  updates="6877, 8585"
   submissionType="IETF"
   xml:lang="en"
   version="3">
@@ -284,13 +284,14 @@ In particular, in a single address model (see <xref target="v4addr"/>) the CLAT 
 Even in a dedicated prefix model, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT. 
 </t>
 <t>
-The CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
+In a single-address model, the CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
 This is required as when the node receives a packet from a NAT64 source, the node needs to differentiate between native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
 For example, an ICMPv6 Echo Reply packet from 64:ff9b::203.0.113.1 can be a response to either an IPv6 ping to 64:ff9b::203.0.113.1, or an IPv4 ping to 203.0.113.1, translated by CLAT.
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state and operate in the stateless mode (see Section 1.3 of <xref target="RFC6145"/>.
 </t>
 <t>
-In a dedicated prefix model, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
+In a dedicated prefix model, the instance MAY attempt to obtain a /64 prefix.
+If the instance chooses not to obtain a dedicated prefix or if the prefix is not available, the instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
 </t>
 <t>
 The node MUST treat the CLAT addresses as any other address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
