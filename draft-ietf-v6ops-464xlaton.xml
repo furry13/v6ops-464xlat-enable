@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="info"
-  docName="draft-ietf-v6ops-claton-04"
+  docName="draft-ietf-v6ops-claton-05"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-04"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-05"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -42,9 +42,8 @@
       </address>
     </author>
 <author initials="T." surname="Jensen" fullname="Tommy Jensen">
-      <organization showOnFrontPage="true">Microsoft</organization>
       <address>
-        <email>tojens@microsoft.com</email>
+        <email>tojens.ietf@gmail.com</email>
       </address>
     </author>
     <date year="2025"/>
