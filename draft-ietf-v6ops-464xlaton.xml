@@ -279,9 +279,44 @@ CLAT IPv6 Addresses
 Section 6.3 of <xref target="RFC6877"/> recommends that the CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments like enterprise networks, Wi-Fi hotspots, etc. 
 Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
-In particular, in a single address model (see <xref target="v4addr"/>) the CLAT instance only need a single CLAT IPv6 address.
+In particular, in a single address model (see <xref target="v4addr"/>) the CLAT instance only need a single CLAT IPv6 address, so obtaining a /64 is wasteful.
+For instance, a home network that gets a /60 from its ISP can only connect up to 15 CLAT-enabled devices before it runs out of available prefixes.
 Even in a dedicated prefix model, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT. 
 </t>
+<t>
+This document updates <xref target="RFC6877"/> by removing the requirement to acquire a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
+The following recommendations are made instead:
+</t>
+<ul>
+<li>
+<t>
+In a single-address model, the CLAT instance SHOULD NOT obtain a dedicated /64 for the purpose of sending and receiving statelessly translated packets.
+</t>
+</li>
+<li>
+<t>
+In a dedicated prefix model, the CLAT instance MAY do one of the following:
+</t>
+<ul>
+<li>
+<t>
+First, perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT.
+</t>
+</li>
+<li>
+<t>
+Obtain a dedicated IPv6 address for each CLAT IPv4 address.
+</t>
+</li>
+<li>
+<t>
+Obtain a dedicated /64 prefix via DHCPv6-PD.
+</t>
+</li>
+</ul>
+</li>
+</ul>
+
 <t>
 In a single-address model, the CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
 This is required as when the node receives a packet from a NAT64 source, the node needs to differentiate between native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
@@ -289,28 +324,53 @@ For example, an ICMPv6 Echo Reply packet from 64:ff9b::203.0.113.1 can be a resp
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state and operate in the stateless mode (see Section 1.3 of <xref target="RFC7915"/>.
 </t>
 <t>
-<xref target="RFC6877"/> suggests that the CLAT instance a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
-This document updates <xref target="RFC6877"/> recommendations.
-More specifically, obtaining a /64 just for translating is NOT RECOMMENDED even in a dedicated prefix model.
-However, an instance MAY obtain a dedicated IPv6 address for each CLAT IPv4 address.
-</t>
-<t>
-The node MUST treat the CLAT addresses as any other address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
+The node SHOULD treat its CLAT IPv6 addresses as any other IPv6 address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
 </t>
 <ul>
 <li>
 <t>
 Performing Duplicate Address Detection for each dedicated CLAT address (Section 5.4 of <xref target="RFC4862"/>);
 </t>
+<ul>
+<li>
+<t>
+Justification: performing DAD minimizes in the unlikely event of address collision.
+Additionaly, network infrastructure devices mandate a DAD packet from the client before enabling network access.
+</t>
+</li>
+</ul>
 </li>
 <li>
-<t> Processing received Neighbor Solicitations sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.</t>
+<t> Processing received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.
+</t>
+<ul>
+<li>
+<t>
+Justification: If a node doesn't respond to unicast NSes, anytime the first-hop router gets a packet for the CLAT address and its Neighbor Cache entry is 'STALE' (Section 7.3.2 of <xref target="RFC4861"/>), the Neighbor Unreachability Detection process (Section 7.3.3 of <xref target="RFC4861"/>) will delete that CLAT address's cache entry. This forces the address resolution process to restart from scratch. Until resolution finishes, traffic for the CLAT address might drop, leading to a degraded user experience, especially for applications sensitive to jitter and packet loss.
+</t>
 </li>
+</ul>
+</li> 
 <li>
 <t>Sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
+<ul>
+<li>
+<t> Jutification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
+</li>
+</ul>
 </li>
 <li>
-Registering the CLAT addresses using DHCPv6 (<xref target="RFC9686"/>), if the network supports the registration.
+<t>
+Registering the CLAT addresses assigned via SLAAC or statically using DHCPv6 (<xref target="RFC9686"/>), if the network supports the registration.
+</t>
+<ul> 
+<li> 
+<t>
+Justification: not registering CLAT addresses creates a significant blid spot for network operators.
+This lack of visibility complicates troubleshooting and forensics, as discussed in <xref target="RFC9686"/>.
+</t>
+</li>
+</ul>
 </li>
 </ul>
 <t>
