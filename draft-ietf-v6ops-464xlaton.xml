@@ -355,7 +355,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 <t>Sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
 <ul>
 <li>
-<t> Jutification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
+<t> Justification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
 </li>
 </ul>
 </li>
