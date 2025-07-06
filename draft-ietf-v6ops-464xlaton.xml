@@ -366,8 +366,7 @@ Registering the CLAT addresses assigned via SLAAC or statically using DHCPv6 (<x
 <ul> 
 <li> 
 <t>
-Justification: not registering CLAT addresses creates a significant blid spot for network operators.
-This lack of visibility complicates troubleshooting and forensics, as discussed in <xref target="RFC9686"/>.
+Justification: not registering CLAT addresses reduces traffic visibility for network operators, which complicates troubleshooting and forensics, as discussed in <xref target="RFC9686"/>.
 </t>
 </li>
 </ul>
