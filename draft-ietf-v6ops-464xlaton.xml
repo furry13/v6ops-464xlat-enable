@@ -300,7 +300,7 @@ In a dedicated prefix model, the CLAT instance MAY do one of the following:
 <ul>
 <li>
 <t>
-First, perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT.
+Perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, then perform stateless CLAT.
 </t>
 </li>
 <li>
