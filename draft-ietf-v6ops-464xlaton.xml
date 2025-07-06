@@ -334,8 +334,8 @@ Performing Duplicate Address Detection for each dedicated CLAT address (Section 
 <ul>
 <li>
 <t>
-Justification: performing DAD minimizes in the unlikely event of address collision.
-Additionaly, network infrastructure devices mandate a DAD packet from the client before enabling network access.
+Justification: performing DAD minimizes loss of connectivity in the unlikely event of address collision.
+Additionally, real world deployment experience shows that network infrastructure devices mandate a DAD packet from the client before enabling network access.
 </t>
 </li>
 </ul>
