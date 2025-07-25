@@ -77,7 +77,7 @@ by providing recommendations for the node developers on enabling and disabling C
       <name>Introduction</name>
 <t>
 464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing a private IPv4 address and default route for the applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where UE devices WAN interfaces have only IPv6 addresses, and no IPv4 ones.
+Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where UE devices WAN interfaces have only IPv6 addresses, and no IPv4 addresses.
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
