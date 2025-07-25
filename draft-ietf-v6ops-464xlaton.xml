@@ -430,7 +430,7 @@ For example, "detecting multiple routers" means that the node received RAs from 
 A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix (both PIO and NAT64 prefix MUST in a given tuple MUST be advertized by the same router), or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix (both PIO and NAT64 prefix in a given tuple MUST be advertised by the same router), or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
 </t>
 
 <t>
