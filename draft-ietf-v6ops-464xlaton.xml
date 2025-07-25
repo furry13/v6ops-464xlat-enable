@@ -132,6 +132,11 @@ CLAT Node: a node (a host or a router) which performs CLAT functions by running 
 </li>
 <li>
 <t>
+IPv4-only application: An application which requires a presence of an IPv4 address and/or IPv4 default route to operate. Examples include but are not limited to applications using IPv4 literals or opening IPv4-only sockets. 
+</t>
+</li>
+<li>
+<t>
 IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 (<xref target="RFC6146"/>). In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it's required by the 464XLAT architecture (<xref target="RFC6877"/>).
 </t>
 </li>
