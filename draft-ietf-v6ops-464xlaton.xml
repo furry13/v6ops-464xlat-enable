@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-v6ops-claton-05"
+  docName="draft-ietf-v6ops-claton-06"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-05"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-06"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -63,7 +63,8 @@
  <t>
 464XLAT [RFC6877] defines an architecture for providing IPv4 connectivity across an IPv6-only network.
 The solution contains two key elements: provider-side translator (PLAT) and customer-side translator (CLAT).
-This document complements [RFC6877] and updates [RFC8585] by providing recommendations for the node developers on enabling and disabling CLAT functions.
+This document complements [RFC6877] and updates Requirements for IPv6 Customer Edge Routers to Support IPv4-as-a-Service (RFC8585)
+by providing recommendations for the node developers on enabling and disabling CLAT functions.
 </t>
 
     </abstract>
@@ -76,11 +77,11 @@ This document complements [RFC6877] and updates [RFC8585] by providing recommend
       <name>Introduction</name>
 <t>
 464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing a private IPv4 address and default route for the applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where those devices are only assigned IPv6 addresses on their WAN interfaces.
+Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where UE devices WAN interfaces have only IPv6 addresses, and no IPv4 addresses.
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
-Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops, etc.) still needed the network to provide IPv4 addresses, as otherwise IPv4-only applications fail.
+Even if the network provides PLAT in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops, etc.) still needed the network to provide IPv4 addresses, as otherwise applications which require IPv4 would fail.
 However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode, while still providing IPv4 as a service via 464XLAT.
 Networks such as public Wi-Fi, enterprise networks, or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
@@ -127,6 +128,11 @@ This document reuses most of Terminology section from <xref target="RFC6877"/>.
 <li>
 <t>
 CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g. one CLAT instance per interface).
+</t>
+</li>
+<li>
+<t>
+IPv4-only application: An application which requires the presence of an IPv4 address and/or IPv4 default route to operate. Examples include but are not limited to applications using IPv4 literals or opening IPv4-only sockets. 
 </t>
 </li>
 <li>
@@ -227,7 +233,7 @@ CLAT Addresses Considerations
 CLAT IPv4 Addresses
 </name>
 <t>
-There are two different models in 464XLAT deployments:
+There are two different 464XLAT deployments models:
 </t>
 <ul>
 <li>
@@ -414,12 +420,17 @@ Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those
 This document does not aim to define CLAT behavior for every possible multi-router/multi-prefix scenario. Instead, this section provides recommendations for common scenarios, leaving numerous corner cases out of scope.
 </t>
 
+<t>
+This section implies that a router is identified by its link-local address, used as a source address for RAs.
+For example, "detecting multiple routers" means that the node received RAs from multiple link-local addresses.
+</t>
+
 
 <t>
 A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix (both PIO and NAT64 prefix in a given tuple MUST be advertised by the same router), or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
 </t>
 
 <t>
