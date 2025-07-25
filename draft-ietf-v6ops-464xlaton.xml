@@ -233,7 +233,7 @@ CLAT Addresses Considerations
 CLAT IPv4 Addresses
 </name>
 <t>
-There are two different models in 464XLAT deployments:
+There are two different 464XLAT deployments models:
 </t>
 <ul>
 <li>
