@@ -420,12 +420,17 @@ Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those
 This document does not aim to define CLAT behavior for every possible multi-router/multi-prefix scenario. Instead, this section provides recommendations for common scenarios, leaving numerous corner cases out of scope.
 </t>
 
+<t>
+This section implies that a router is identified by its link-local address, used as a source address for RAs.
+For example, "detecting multiple routers" means that the node received RAs from multiple link-local addresses.
+</t>
+
 
 <t>
 A node discovering multiple routers on the same interface advertising the <em>same PIOs and NAT64 prefix</em>, SHOULD only create one CLAT instance using one of the PIOs to form a CLAT address. 
 </t>
 <t>
-A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix, or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
+A node discovering multiple routers on the same interface signalling the <em>different PIOs and NAT64 prefixes</em>, MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix (both PIO and NAT64 prefix MUST in a given tuple MUST be advertized by the same router), or only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
 </t>
 
 <t>
