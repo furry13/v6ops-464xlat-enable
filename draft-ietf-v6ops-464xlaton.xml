@@ -230,7 +230,7 @@ While disabling CLAT is impactful for all applications and traffic flows already
 </t>
 <t>
 When a node disables CLAT, it might indicate a network misconfiguration or an attack in progress. It may be useful for an administrator to receive signals when CLAT use turns on or off as well as changes to network-received configuration.
-Therefore the node SHOULD log the reason for disabling CLAT unless configured otherwise.
+Therefore the node SHOULD log the reason for disabling CLAT and any other changes to CLAT configuration or network signals CLAT is acting on to support administrator debugging and auditing.
 As logging is mostly benefitial in managed environments, the logging behaviour SHOULD be configurable and MAY be disabled by default.
 </t>
 <t>
