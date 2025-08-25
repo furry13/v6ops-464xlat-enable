@@ -226,8 +226,12 @@ Unless explicitly configured otherwise, the node MUST disable CLAT immediately u
 </t>
 <t>
 While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, it is recommended not only from a performance perspective, but also from a security point of view.
-<xref target="Security"/> section discusses this aspect in more details.
-
+<xref target="Security"/> discusses this aspect in more details.
+</t>
+<t>
+As the node disabling CLAT might indicate a network misconfiguration or an attack, it may be useful for an administrator to receive a notification signal.
+Therefore the node SHOULD log the reason for disabling CLAT unless configured otherwise.
+As logging is mostly benefitial in managed environments, the logging behaviour SHOULD be configurable and MAY be disabled by default.
 </t>
 <t>
 There are some corner cases when the administrator might prefer the node to use CLAT even if the native IPv4 connectivity is available (e.g. for performance reasons, if IPv4 as a Service performs better than native IPv4). This behaviour might be desirable for devices which do not move between networks, such as servers or workstations, where the administrator might want to have CLAT enabled unconditionally. However for the reasons described above such behaviour MUST be explicitly enabled by the administrator via a configuration knob and MUST NOT be a default behaviour, especially for unmanaged nodes.
@@ -354,7 +358,9 @@ An ICMPv6 error packet from a global IPv6 address (not belonging to the NAT64 pr
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state, so CLAT can operate in the stateless mode (see Section 1.3 of <xref target="RFC7915"/>.
 </t>
 <t>
-The node SHOULD treat its CLAT IPv6 addresses as any other IPv6 address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. In particular:
+Reports from the field indicate that some CLAT implementations exhibit different behavior for their CLAT IPv6 addresses compared to native IPv6 addresses.
+While this approach may simplify implementation, it can lead to a degraded user experience. 
+Therefore the node MUST treat its CLAT IPv6 addresses as any other IPv6 address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. Some existing implementations are known to In particular:
 </t>
 <ul>
 <li>
