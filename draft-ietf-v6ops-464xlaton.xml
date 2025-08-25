@@ -818,7 +818,7 @@ In the vast majority of the cases it means that address is never visible outside
 <name>Enabling and Disabling CLAT: Flowchart</name>
 
 <t>
-For illustrative purposes, the following diagram provides a high-level overview of the state machine for enabling and disabling CLAT on a node; it is not exhaustive and does not cover all corner cases.
+For illustrative purposes, the following diagram provides a high-level overview of the state machine for enabling and disabling CLAT on a node. It is not exhaustive of all corner cases or custom environment needs and does not override this document's normative requirements.
 </t>
 
 <figure>
