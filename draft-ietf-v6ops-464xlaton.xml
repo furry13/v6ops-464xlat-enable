@@ -731,7 +731,7 @@ To mitigate rogue DHCPv4 server attacks on CLAT-enabled nodes, network adinistra
 </t>
 <t>
 As discussed above, disabling CLAT in the presence of native IPv4 connectivity helps mitigating RA-based attacks but enables DHCPv4-based attack vectors, if the network lacks Layer2 security features.
-However, nowadays it's much more likely that an IPv4-only network lacks IPv6 security than an IPv6-only network not having IPv4 L2 security features deployed.
+However, as of the time of this document's publication, it's much more likely that an IPv4-only network lacks IPv6 security than an IPv6-only network not having IPv4 L2 security features deployed.
 </t>
     </section>
 
