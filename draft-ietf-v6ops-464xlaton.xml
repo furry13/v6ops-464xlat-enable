@@ -335,7 +335,7 @@ Obtain a dedicated /64 prefix via DHCPv6-PD.
 
 <t>
 In a single-address model, the CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
-This is needed as when the node receives an IPv6 packet, the node needs to differentiate between native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
+This is needed to differentiate between inbound native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
 For example:
 </t>
 <ul>
