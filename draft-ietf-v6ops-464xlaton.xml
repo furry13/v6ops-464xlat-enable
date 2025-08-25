@@ -750,7 +750,7 @@ In particular, if the instance utilizes the same CLAT IPv6 address for an extens
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT device.
-In the vast majority of the cases it means that address is never visible outside of the network Internet edge, so to perform address-based network-activity correlation the observer needs to be located in the same network as the CLAT node, or the PLAT must reside outside of the administrative domain, such as a public NAT64 service.
+In the vast majority of the cases it means that address is never visible outside of the network Internet edge, so to perform address-based network-activity correlation the observer needs to be located in the same network as the CLAT node, or the PLAT needs to reside outside of the administrative domain, such as a public NAT64 service.
       </t>
     </section>
     
