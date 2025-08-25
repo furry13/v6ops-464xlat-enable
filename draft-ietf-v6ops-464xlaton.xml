@@ -104,7 +104,7 @@ In another variation of the 464XLAT deployment (Section 4.1 of <xref target="RFC
 While Section 6 of <xref target="RFC6877"/> discusses implementation considerations for the 464XLAT architecture, there is a need for more detailed guidance for CLAT implementations.
 The recent increase in IPv6-only deployments has provided valuable operational experience, which has revealed gaps in existing CLAT requirements.
 
-This document addresses these gaps by providing requirements and recommendations for implementing CLAT functions. For example, it provides guidance on how CLAT-enabled nodes (such as a host or a CPE router) should enable the CLAT when connecting to an IPv6-only network and how they should react to network changes to minimize the impact on user traffic.
+This document addresses these gaps by providing requirements and recommendations for implementing CLAT functions. For example, it provides guidance on how CLAT-enabled nodes (such as a host or a CPE router) should enable CLAT when connecting to an IPv6-only network and how they should react to network changes to minimize negative impact on user traffic.
 
 This document serves as a complement to  <xref target="RFC6877"/> and an update to  <xref target="RFC8585"/>.
 
