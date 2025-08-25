@@ -738,8 +738,7 @@ However, as of the time of this document's publication, it's much more likely th
     <section anchor="privacy">
       <name>Privacy Considerations</name>
       <t>
-This document does not introduce any new privacy considerations. 
-However there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
+This document does not introduce any new privacy considerations, but there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
 In particular, if the instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks (see <xref target="v6addr"/>).
 </t>
 <t>
