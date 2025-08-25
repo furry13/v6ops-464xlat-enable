@@ -702,8 +702,8 @@ Therefore <xref target="enable"/> recommends the PREF64 RA option as a preferred
 <t>
 The attack vector described above is not specific to 464XLAT deployments: security implications of rogue RAs have been discussed and documented before (see <xref target="RFC6104"/>). 
 To prevent such an attack, IPv6-enabled networks need to secure RAs - e.g. by deploying RA-Guard <xref target="RFC6105"/>.
-However, networks without explicit (intentional)  IPv6 deployment are inherently IPv6-ignorant, and consequently might lack IPv6 security features.
-In such networks IPv6-enabled endpoints may be inadvertently exposed to  link-local IPv6 connectivity.
+However, networks without explicit (intentional) IPv6 deployment are inherently IPv6-ignorant, and consequently might lack IPv6 security features.
+In such networks IPv6-enabled endpoints may be inadvertently exposed to link-local IPv6 connectivity.
 This unintended exposure can facilitate PLAT presence signal falsification, as described above.
 This document mitigates this risk by requiring endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
 </t>
