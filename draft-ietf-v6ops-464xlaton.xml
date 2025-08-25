@@ -260,7 +260,7 @@ In all those cases, systems behind the CLAT node usually use <xref target="RFC19
 <t>
 A single-address model (<xref target="RFC6877"/> uses the term "wireless network architecture").
 In that case, the CLAT instance provides an IPv4 address and the default route to the local node's network stack only.
-When <xref target="RFC6877"/> was published, this deployment scenario is limited to 3GPP cases, while currently it is also deployed in other types of networks, such as enterprise networks and Wi-Fi hotspots, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
+When <xref target="RFC6877"/> was published, this deployment scenario was limited to 3GPP cases. Today, it is also deployed in other types of networks, such as enterprise networks and Wi-Fi hotspots, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
 </t>
 </li>
 </ul>
