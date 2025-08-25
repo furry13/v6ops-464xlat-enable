@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-v6ops-claton-06"
+  docName="draft-ietf-v6ops-claton-07"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-06"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-07"/>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
