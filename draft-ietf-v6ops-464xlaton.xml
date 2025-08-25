@@ -708,7 +708,7 @@ This unintended exposure can facilitate PLAT presence signal falsification, as d
 This document mitigates this risk by requiring endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
 </t>
 <t>
-However the recommended behaviour (disabling CLAT in the presence of native IPv4 connectivity) introduces another attack vector: a rogue DHCPv4 server.
+However, the recommended behaviour (disabling CLAT in the presence of native IPv4 connectivity) introduces another attack vector: a rogue DHCPv4 server.
 An attacker can provide the CLAT node with an IPv4 address and default gateway, causing the node to disable CLAT.
 Similarily to the spoofed PLAT presense case discussed above, a rogue DHCP server allows the attacker to implement:
 </t>
