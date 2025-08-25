@@ -137,7 +137,7 @@ CLAT Node: a node (a host or a router) which performs CLAT functions by running 
 </li>
 <li>
 <t>
-Dedicated prefix model: a scenario when the node performing CLAT functions also extends the IPv4 network connectivity downstream, to other connected systems. See <xref target="v4addr"/>. While <xref target="RFC6877"/> uses the term "wireline network architecture", this scenario is also applicable for wireless or 3GPP routers. Therefore the term "wireless" is no longer accurate and not used in this document.
+Dedicated prefix model: a scenario when the node performing CLAT functions also extends the IPv4 network connectivity downstream, to other connected systems. See <xref target="v4addr"/>. While <xref target="RFC6877"/> uses the term "wireline network architecture", this scenario is also applicable for wireless or 3GPP routers. Therefore the term "wireline" is no longer accurate and not used in this document.
 </t>
 </li>
 <li>
