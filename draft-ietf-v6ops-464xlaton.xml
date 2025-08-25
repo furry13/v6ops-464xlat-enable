@@ -403,7 +403,7 @@ Justification: not registering CLAT addresses reduces traffic visibility for net
 </li>
 </ul>
 <t>
-If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral (the CLAT IPv6 address has the same complement checksum as the local IPv4 CLAT address, see section 4.1 of <xref target="RFC6052"/>). 
+If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local IPv4 CLAT address. See section 4.1 of <xref target="RFC6052"/>. 
 This means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured).
 Using a checksum-neutral CLAT address provides the following benefits:
 </t>
