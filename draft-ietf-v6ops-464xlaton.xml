@@ -275,7 +275,7 @@ If in the future some deployment scenarios require more that 8 CLAT instances pe
 The node MUST NOT send packets on wire from the local CLAT addresses.
 </t>
 <t>
-The host SHOULD use 255.255.255.255 as a netmask for the CLAT addressm.
+The host SHOULD use 255.255.255.255 as a netmask for the CLAT address.
 That allows all 8 addresses from 192.0.0.0/29 to be used, if needed, since this means that each address is treated as being its own subnet, rather than being part of a subnet delineated by the prefix.
 </t>
 <t>
