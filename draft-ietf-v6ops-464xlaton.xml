@@ -359,13 +359,14 @@ Using a dedicated IPv6 source address for CLAT traffic allows the node to make t
 </t>
 <t>
 Reports from the field indicate that some CLAT implementations exhibit different behavior for their CLAT IPv6 addresses compared to native IPv6 addresses.
-While this approach may simplify implementation, it can lead to a degraded user experience. 
-Therefore the node MUST treat its CLAT IPv6 addresses as any other IPv6 address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>. Some existing implementations are known to In particular:
+While this approach may simplify implementation, it often leads to a degraded user experience, as described below:
+Therefore the node MUST treat its CLAT IPv6 addresses as any other IPv6 address and comply with <xref target="RFC4861"/> and <xref target="RFC4862"/>.
+In particular:
 </t>
 <ul>
 <li>
 <t>
-Performing Duplicate Address Detection for each dedicated CLAT address (Section 5.4 of <xref target="RFC4862"/>);
+The node MUST perform Duplicate Address Detection for each dedicated CLAT address (Section 5.4 of <xref target="RFC4862"/>);
 </t>
 <ul>
 <li>
@@ -377,7 +378,7 @@ Additionally, real world deployment experience shows that network infrastructure
 </ul>
 </li>
 <li>
-<t> Processing received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.
+<t> The node MUST process received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.
 </t>
 <ul>
 <li>
@@ -388,7 +389,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </ul>
 </li> 
 <li>
-<t>Sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
+<t>The node SHOULD sending Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
 <ul>
 <li>
 <t> Justification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
@@ -397,7 +398,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </li>
 <li>
 <t>
-Registering the CLAT addresses assigned via SLAAC or statically using DHCPv6 (<xref target="RFC9686"/>), if the network supports the registration.
+The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses assigned via SLAAC or statically, if the network supports the registration.
 </t>
 <ul> 
 <li> 
@@ -745,11 +746,11 @@ However, as of the time of this document's publication, it's much more likely th
       <name>Privacy Considerations</name>
       <t>
 This document does not introduce any new privacy considerations, but there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
-In particular, if the instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors can correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks (see <xref target="v6addr"/>).
+In particular, if the instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks (see <xref target="v6addr"/>).
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT device.
-In the vast majority of the cases it means that address is never visible outside of the network Internet edge, so to perform address-based network-activity correlation the observer needs to be located in the same network as the CLAT node.
+In the vast majority of the cases it means that address is never visible outside of the network Internet edge, so to perform address-based network-activity correlation the observer needs to be located in the same network as the CLAT node, or the PLAT must reside outside of the administrative domain, such as a public NAT64 service.
       </t>
     </section>
     
@@ -815,6 +816,10 @@ In the vast majority of the cases it means that address is never visible outside
 
 <section anchor="app">
 <name>Enabling and Disabling CLAT: Flowchart</name>
+
+<t>
+For illustrative purposes, the following diagram provides a high-level overview of the state machine for enabling and disabling CLAT on a node; it is not exhaustive and does not cover all corner cases.
+</t>
 
 <figure>
   <name>Enabling and Disabling CLAT Instance</name>
