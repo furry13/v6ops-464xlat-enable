@@ -722,7 +722,7 @@ Similarily to the spoofed PLAT presense case discussed above, a rogue DHCP serve
 <ul>
 <li>
 <t>
-A denial-of-server attack (as the victim's IPv4 traffic will be dropped by the network).
+A denial-of-service attack (as the victim's IPv4 traffic will be dropped by the network).
 </t>
 </li>
 <li>
