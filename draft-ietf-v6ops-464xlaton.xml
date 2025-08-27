@@ -76,8 +76,8 @@ by providing recommendations for the node developers on enabling and disabling C
     <section>
       <name>Introduction</name>
 <t>
-464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing a private IPv4 address and default route for the applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where UE devices WAN interfaces have only IPv6 addresses, and no IPv4 addresses.
+464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) devices (such as mobile phones and CE routers) perform the CLAT function, providing an IPv4 address and default route for the applications and tethered devices.
+Enabling 464XLAT allowed mobile operators to transition UE devices to IPv6-only mode, where UE devices cellural interfaces have only IPv6 addresses, and no IPv4 addresses.
 </t>
 <t>
 Until recently, IPv6-only hosts were rather uncommon outside of mobile networks and datacenters.
@@ -91,7 +91,7 @@ Networks such as public Wi-Fi, enterprise networks, or even home networks can de
 </li>
 <li>
 <t>
-CLAT is performed by the UA itself.
+CLAT is performed by the UE itself.
 </t>
 </li>
 </ul>
@@ -167,10 +167,6 @@ ULA: Unique Local Addresses, <xref target="RFC4193"/>.
 </li>
 </ul>
 
-<t>
-Currently the only avalable form of PLAT for 464XLAT deployments is NAT64.
-Therefore this document uses those terms interchangeably.
-</t>
 </section>
 <section anchor="multihomed">
 <name>Multiple Interfaces Considerations</name>
@@ -178,7 +174,6 @@ Therefore this document uses those terms interchangeably.
 A node may have multiple IPv6-only interfaces (for example, a mobile phone can be connected to an IPv6-only Wi-Fi network and to an IPv6-only mobile network).
 In that case the node SHOULD run an independent, dedicated CLAT instance on each interface connected to a network equipped with PLAT.
 Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
-The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default routes.
 </t>
 </section>
 
@@ -186,8 +181,8 @@ The metrics of IPv4 routes SHOULD be consistent with the metrics of IPv6 default
 <name>Enabling CLAT</name>
 
 <t>
-For performance and security reasons CLAT MUST NOT be enabled if the node has IPv4 native connectivity over the given interface.
-Therefore recommendations provided in this section are only applicable to the IPv6-only interfaces of a given node (the node has no native IPv4 default route pointing to that interface).
+For performance and security reasons CLAT MUST NOT be enabled (unless explicitly configured otherwise) if the node has IPv4 native connectivity over the given interface (see <xref target="disable"/> for more details).
+Therefore recommendations provided in this section are only applicable to the IPv6-only interfaces of a given node (the node has no native IPv4 connectivity via that interface).
 </t>
 
 <t>
@@ -389,7 +384,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </ul>
 </li> 
 <li>
-<t>The node SHOULD send Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>) for the CLAT addresses.</t>
+<t>If the node supports Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>), the node SHOULD send them for the CLAT addresses.</t>
 <ul>
 <li>
 <t> Justification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
@@ -398,7 +393,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </li>
 <li>
 <t>
-The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses assigned via SLAAC or statically, if the network supports the registration.
+The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses, if the network supports the registration.
 </t>
 <ul> 
 <li> 
@@ -453,7 +448,7 @@ This document does not aim to define CLAT behavior for every possible multi-rout
 </t>
 
 <t>
-This section implies that a router is identified by its link-local address, used as a source address for RAs.
+This section assumes that a router is identified by its link-local address, used as a source address for RAs.
 For example, "detecting multiple routers" means that the node received RAs from multiple link-local addresses.
 </t>
 
