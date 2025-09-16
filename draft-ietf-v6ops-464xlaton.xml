@@ -264,7 +264,7 @@ When <xref target="RFC6877"/> was published, this deployment scenario was limite
 </li>
 </ul>
 <t>
-In the single-address model, the CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="v6addr"/>).
+In the single-address model, the CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
 The node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions including but not limited to 464XLAT.
 If the node runs multiple CLAT instances in the single-address model (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
 This approach limits the number of CLAT instances per node to 8, which seems to be more that sufficient at the time of writing. 
@@ -290,6 +290,8 @@ Therefore, as long as the host is not using DS-Lite, it MAY use 192.0.0.0/29 for
 <name>
 CLAT IPv6 Addresses
 </name>
+<section anchor="slaac">
+<name>Obtaining CLAT IPv6 Addresses</name>
 <t>
 Section 6.3 of <xref target="RFC6877"/> recommends that the CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments like enterprise networks, Wi-Fi hotspots, etc. 
@@ -333,7 +335,7 @@ Obtain a dedicated /64 prefix via DHCPv6-PD.
 </ul>
 
 <t>
-In a single-address model, the CLAT instance SHOULD obtain a dedicated IPv6 address used exclusively for CLAT functions. 
+In a single-address model, the CLAT instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
 This is needed to differentiate between inbound native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
 For example:
 </t>
@@ -351,7 +353,35 @@ An ICMPv6 error packet from a global IPv6 address (not belonging to the NAT64 pr
 </ul>
 <t>
 Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state, so CLAT can operate in the stateless mode (see Section 1.3 of <xref target="RFC7915"/>.
+In the absence of a dedicated address the CLAT instance would be required to use stateful NAT64.
+At the same time [RFC6877] defines 464XLAT as an architecure where the customer-side translation is stateless (it is even mentioned explictly in the [RFC6877] title.
+While it is possible to implement stateful client-side trabslation and use a single IPv6 address for both native and translated IPv6 packets, that approach doesn't fit the framework defined in [RFC6877] and, therefore, is out of scope of this document.
 </t>
+<t>
+If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local IPv4 CLAT address. See section 4.1 of <xref target="RFC6052"/>. 
+This means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured).
+Using a checksum-neutral CLAT address provides the following benefits:
+</t>
+<ul>
+<li>
+<t>Better performance as CLAT doesn't need to recalculate the checksum.</t>
+</li>
+<li>
+<t>
+If a protocol uses the standard IP checksum, CLAT doesn't need to recalculate the checksum.
+That improves the chances of the protocol working via CLAT even if CLAT is not aware of the protocol's semantics.
+</t>
+</li>
+</ul>
+
+<t>
+To protect user privacy and prevent user tracking through CLAT addresses, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks, even if the NAT64 prefix and the local IPv4 CLAT address do not change. 
+In particular, the node SHOULD generate a random CLAT address every time the network attachement changes to another network.
+</t>
+</section>
+
+<section>
+<name>CLAT vs non-CLAT IPv6 Addresses Behaviour</name>
 <t>
 Reports from the field indicate that some CLAT implementations exhibit different behavior for their CLAT IPv6 addresses compared to native IPv6 addresses.
 While this approach may simplify implementation, it often leads to a degraded user experience, as described below:
@@ -404,28 +434,7 @@ Justification: not registering CLAT addresses reduces traffic visibility for net
 </ul>
 </li>
 </ul>
-<t>
-If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local IPv4 CLAT address. See section 4.1 of <xref target="RFC6052"/>. 
-This means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured).
-Using a checksum-neutral CLAT address provides the following benefits:
-</t>
-<ul>
-<li>
-<t>Better performance as CLAT doesn't need to recalculate the checksum.</t>
-</li>
-<li>
-<t>
-If a protocol uses the standard IP checksum, CLAT doesn't need to recalculate the checksum.
-That improves the chances of the protocol working via CLAT even if CLAT is not aware of the protocol's semantics.
-</t>
-</li>
-</ul>
-
-<t>
-To protect user privacy and prevent user tracking through CLAT addresses, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks, even if the NAT64 prefix and the local IPv4 CLAT address do not change. 
-In particular, the node SHOULD generate a random CLAT address every time the network attachement changes to another network.
-</t>
-
+</section>
 </section>
 </section>
 
@@ -741,7 +750,7 @@ However, as of the time of this document's publication, it's much more likely th
       <name>Privacy Considerations</name>
       <t>
 This document does not introduce any new privacy considerations, but there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
-In particular, if the instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks (see <xref target="v6addr"/>).
+In particular, if the instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface id for the CLAT address when connecting to different networks (see <xref target="slaac"/>).
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT device.
