@@ -393,7 +393,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </li>
 <li>
 <t>
-The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses, if the network supports the registration.
+The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses if the network supports the registration.
 </t>
 <ul> 
 <li> 
