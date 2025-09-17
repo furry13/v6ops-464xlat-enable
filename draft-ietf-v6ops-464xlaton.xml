@@ -303,7 +303,7 @@ If the node is extending IPv4 connectivity downstream, the node MUST either:
 <ul>
 <li>
 <t>
-Obtain a dedicated /64 prefix (e.g. via DHCPv6-PD), and statelessly translate downstream IPv4 addresses to IPv6 addresses in this prefix, as per <xref target="RFC6052"/>.
+Obtain a dedicated prefix that satisfies the requirements in section 2.2 of <xref target="RFC6052"/> (e.g., via DHCPv6 PD), and statelessly translate downstream IPv4 addresses to IPv6 addresses in this prefix.
 </t>
 </li>
 <li>
@@ -315,7 +315,7 @@ Perform stateful NAT44 from the downstream IPv4 addresses to a single IPv4 addre
 </li>
 <li>
 <t>
-If the CLAT instance only uses a single IPv4 address (including scenarios where the node is performing stateful NAT44 to that address), the instance SHOULD NOT obtain a dedicated /64 for the purpose of sending and receiving statelessly translated packets.
+If the CLAT instance only uses a single IPv4 address (including scenarios where the node is performing stateful NAT44 to that address), the instance SHOULD NOT obtain a dedicated prefix for the purpose of sending and receiving statelessly translated packets.
 </t>
 </li>
 </ul>
