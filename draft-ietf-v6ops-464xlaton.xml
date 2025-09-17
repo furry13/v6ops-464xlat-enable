@@ -322,7 +322,7 @@ If the CLAT instance only uses a single IPv4 address (including scenarios where 
 
 <t>
 If the CLAT instance doesn't obtain a dedicated IPv6 prefix, the instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
-This is needed because applications running on the CLAT node can use an IPv4 socket and an IPv6 socket to produce an IPv4 packet and an IPv6 packet that after translation are identical, and the node has no way to know whether to translate those replies and pass them back to the IPv4 socket or pass them back to the IPv6 socket as is.
+A dedicated address is needed because applications running on the CLAT node can use an IPv4 socket and an IPv6 socket to produce an IPv4 packet and an IPv6 packet that after translation are identical, and the node has no way to know whether to translate those replies and pass them back to the IPv4 socket or pass them back to the IPv6 socket as is.
 For example, the two packets sent by the node will be identical after translation:
 </t>
 <ul>
