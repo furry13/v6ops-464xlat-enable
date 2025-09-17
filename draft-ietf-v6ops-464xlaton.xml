@@ -322,8 +322,8 @@ If the CLAT instance only uses a single IPv4 address (including scenarios where 
 
 <t>
 If the CLAT instance doesn't obtain a dedicated IPv6 prefix, the instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
-A dedicated address is needed because applications running on the CLAT node can use an IPv4 socket and an IPv6 socket to produce an IPv4 packet and an IPv6 packet that after translation are identical, and the node has no way to know whether to translate those replies and pass them back to the IPv4 socket or pass them back to the IPv6 socket as is.
-For example, the two packets sent by the node will be identical after translation:
+A dedicated address is needed because applications running on the CLAT node can use an IPv4 socket and an IPv6 socket to produce an IPv4 packet and an IPv6 packet that after translation are identical, and the CLAT has no way to know whether to translate those replies and pass them back to the IPv4 socket or pass them back to the IPv6 socket as is.
+For example, these two packets sent by the node will be identical after translation:
 </t>
 <ul>
 <li>
@@ -353,8 +353,7 @@ An ICMPv6 error packet from a global IPv6 address (not belonging to the NAT64 pr
 </li>
 </ul>
 <t>
-Using dedicated IPv6 source addresses is required to ensure that the CLAT can statelessly translate inbound packets.
-In the absence of dedicated addresses, the architecture would need additional stateful elements on the client side which are not part of 464XLAT as defined in <xref target="RFC6877"/>.
+Therefore, in the absence of dedicated addresses, the architecture would need additional stateful elements on the client side which are not part of 464XLAT as defined in <xref target="RFC6877"/>.
 Discussion of such architectures is beyond the scope of this document.
 </t>
 <t>
