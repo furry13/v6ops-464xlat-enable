@@ -137,11 +137,6 @@ CLAT Node: a node (a host or a router) which performs CLAT functions by running 
 </li>
 <li>
 <t>
-Dedicated prefix model: a scenario when the node performing CLAT functions also extends the IPv4 network connectivity downstream, to other connected systems. See <xref target="v4addr"/>. While <xref target="RFC6877"/> uses the term "wireline network architecture", this scenario is also applicable for wireless or 3GPP routers. Therefore the term "wireline" is no longer accurate and not used in this document.
-</t>
-</li>
-<li>
-<t>
 IPv4-only application: An application which requires the presence of an IPv4 address and/or IPv4 default route to operate. Examples include but are not limited to applications using IPv4 literals or opening IPv4-only sockets. 
 </t>
 </li>
@@ -153,11 +148,6 @@ IPv6-only network: A network that does not assign IPv4 addresses to hosts and fa
 <li>
 <t>
 Native IPv4 (such as in 'native IPv4 connectivity' or 'native IPv4 default gateway'): IPv4 connectivity or default gateway provided by the network without using any form of IPv4-as-a-service or translation mechanisms (such as 464XLAT).
-</t>
-</li>
-<li>
-<t>
-Single-address model: a scenario when the node performing CLAT functions provides an IPv4 address and the default route to the local node's network stack only. See <xref target="v4addr"/>. While <xref target="RFC6877"/> uses the term "wireless network architecture", this scenario is applicable for wired networks as well (e.g. desktops or servers using wired connections). Therefore the term "wireless" is no longer accurate and not used in this document.
 </t>
 </li>
 <li>
@@ -244,29 +234,19 @@ CLAT Addresses Considerations
 CLAT IPv4 Addresses
 </name>
 <t>
-There are two different 464XLAT deployments models:
-</t>
-<ul>
-<li>
-<t>
-A dedicated prefix model (<xref target="RFC6877"/> uses the term "wireline network architecture").
-In that case, the node performing CLAT functions also extends the network downstream and provides network connectivity services to other connected systems.
+A CLAT instance provides an IPv4 address and the default route to the local node's network stack.
+However, the node can also extend the network downstream and provides network connectivity services to other connected systems.
 Those systems can be physical (e.g. various clients connected to a CPE router), or logical (e.g. virtual systems running on a node, while the host system acts as a router and performs CLAT). 
-In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses.
+ In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses. 
+The CLAT instance can either translate all other addresses statelessly to a dedicated prefix, or perform a stateful NAT44 between those addresses and a dedicated CLAT IPv4 address, which is stateless translated to a single dedicated IPv4 address.
 </t>
-</li>
-<li>
 <t>
-A single-address model (<xref target="RFC6877"/> uses the term "wireless network architecture").
-In that case, the CLAT instance provides an IPv4 address and the default route to the local node's network stack only.
-When <xref target="RFC6877"/> was published, this deployment scenario was limited to 3GPP cases. Today, it is also deployed in other types of networks, such as enterprise networks and Wi-Fi hotspots, where hosts (as mobile phones, laptops and desktops) use CLAT to provide connectivity to IPv4-only local applications.
+This section only applies to that single dedicated IPv4 address, which CLAT instance uses for providing network connectivity to local appications and (in case of extending network connectivity downstream) for stateful NAT44.
 </t>
-</li>
-</ul>
 <t>
-In the single-address model, the CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
+The CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
 The node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions including but not limited to 464XLAT.
-If the node runs multiple CLAT instances in the single-address model (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
+If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
 This approach limits the number of CLAT instances per node to 8, which seems to be more that sufficient at the time of writing. 
 If in the future some deployment scenarios require more that 8 CLAT instances per node, a new larger IPv4 range will be requested from IANA.
 </t>
@@ -296,46 +276,30 @@ CLAT IPv6 Addresses
 Section 6.3 of <xref target="RFC6877"/> recommends that the CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments like enterprise networks, Wi-Fi hotspots, etc. 
 Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
-In particular, in a single address model (see <xref target="v4addr"/>) the CLAT instance only need a single CLAT IPv6 address, so obtaining a /64 is wasteful.
+In particular, if the CLAT only provides the IPv4 connectivity to applications local to the node (or if the node can perform stateful NAT44) the CLAT instance only need a single CLAT IPv6 address, so obtaining a /64 is wasteful.
 For instance, a home network that gets a /60 from its ISP can only connect up to 15 CLAT-enabled devices before it runs out of available prefixes.
-Even in a dedicated prefix model, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, and then perform stateless CLAT. 
+Even if the node extends IPv4 connectivity downstream, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses used by downstream devices to a single IPv4 address, and then perform stateless CLAT. 
 </t>
 <t>
-This document updates <xref target="RFC6877"/> by removing the requirement to acquire a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
+This document updates <xref target="RFC6877"/> by relaxing the requirement to acquire a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
 The following recommendations are made instead:
 </t>
 <ul>
 <li>
 <t>
-In a single-address model, the CLAT instance SHOULD NOT obtain a dedicated /64 for the purpose of sending and receiving statelessly translated packets.
+If the node is extending IPv4 connectivity downstream and is not performing stateful NAT44 (so it needs to translate downstream IPv4 addresses to IPv6 statelessly), the node 
+SHOULD obtain a dedicated /64 prefix (e.g. via DHCPv6-PD).
 </t>
 </li>
 <li>
 <t>
-In a dedicated prefix model, the CLAT instance MAY do one of the following:
+If the CLAT instance only uses a single IPv4 address (including scenarios where the node is performing stateful NAT44 to that address), the instance SHOULD NOT obtain a dedicated /64 for the purpose of sending and receiving statelessly translated packets.
 </t>
-<ul>
-<li>
-<t>
-Perform stateful NAT44 to translate all IPv4 addresses from the dedicated prefix to a single IPv4 address, then perform stateless CLAT.
-</t>
-</li>
-<li>
-<t>
-Obtain a dedicated IPv6 address for each CLAT IPv4 address.
-</t>
-</li>
-<li>
-<t>
-Obtain a dedicated /64 prefix via DHCPv6-PD.
-</t>
-</li>
-</ul>
 </li>
 </ul>
 
 <t>
-In a single-address model, the CLAT instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
+If the CLAT instance doesn't obtain a dedicated IPv6 prefix, the instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
 This is needed to differentiate between inbound native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
 For example:
 </t>
@@ -565,7 +529,7 @@ The IPv4 header is 20 bytes long (or longer if IP options are present), while th
 This means that when CLAT translates an IPv4 packet to IPv6, it usually adds 20 bytes to the packet size.
 However, when CLAT translates a fragmented IPv4 packet, then Fragment Header needs to be added to the resulting IPv6 packet (Section 4.1 of <xref target="RFC7915"/>).
 The length of IPv6 Fragment Extension header is 8 bytes (Section 4.5 of <xref target="RFC8200"/>).
-Therefore, to minimize undesirable IP fragmentation (<xref target="RFC8900"/>), the CLAT instance in a single-address mode SHOULD present IPv4-only applications with an IPv4 MTU which is 28 bytes smaller than the IPv6 MTU of the interface the instance is running on.
+Therefore, to minimize undesirable IP fragmentation (<xref target="RFC8900"/>), the CLAT instance SHOULD present IPv4-only applications with an IPv4 MTU which is 28 bytes smaller than the IPv6 MTU of the interface the instance is running on.
 </t>
 </section>
 
