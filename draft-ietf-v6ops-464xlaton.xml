@@ -237,7 +237,7 @@ CLAT IPv4 Addresses
 A CLAT instance provides an IPv4 address and the default IPv4 route to the local node's network stack.
 However, the node can also extend the network downstream and provides IPv4 network connectivity to other connected systems.
 Those systems can be physical (e.g. various clients connected to a CPE router), or logical (e.g. virtual systems running on a node, while the host system acts as a router and performs CLAT). 
- In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses. 
+In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses. 
 The CLAT instance can either translate all other addresses statelessly to a dedicated prefix, or perform a stateful NAT44 between those addresses and a dedicated CLAT IPv4 address, which is stateless translated to a single dedicated IPv4 address.
 </t>
 <t>
