@@ -241,7 +241,7 @@ In all those cases, systems behind the CLAT node usually use <xref target="RFC19
 The CLAT instance can either translate these IPv4 addresses statelessly to IPv6 using a dedicated IPv6 prefix, or perform a stateful NAT44 between these IPv4 addresses and a dedicated CLAT IPv4 address, which is then statelessly translated to a single dedicated IPv6 address.
 </t>
 <t>
-This section only applies to that single dedicated IPv4 address, which CLAT instance uses for providing network connectivity to local appications and (in case of extending network connectivity downstream) for stateful NAT44.
+This section only applies to a single dedicated IPv4 address which the CLAT instance uses for providing network connectivity only to local applications or using stateful NAT44 when extending network connectivity downstream.
 </t>
 <t>
 The CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
