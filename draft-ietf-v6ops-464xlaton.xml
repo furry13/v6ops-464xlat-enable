@@ -287,8 +287,8 @@ The following recommendations are made instead:
 <ul>
 <li>
 <t>
-If the node is extending IPv4 connectivity downstream and is not performing stateful NAT44 (so it needs to translate downstream IPv4 addresses to IPv6 statelessly), the node 
-SHOULD obtain a dedicated /64 prefix (e.g. via DHCPv6-PD).
+If the node is extending IPv4 connectivity downstream, the node 
+SHOULD obtain a dedicated /64 prefix (e.g. via DHCPv6-PD) for stateless translation of downstream IPv4 addresses unless it chooses to perform stateful NAT44 from the downstream IPv4 addresses to a single IPv4 address for stateless translation.
 </t>
 </li>
 <li>
