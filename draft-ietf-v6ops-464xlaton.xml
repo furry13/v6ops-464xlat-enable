@@ -26,6 +26,16 @@
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Recommendations</title>
     <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-07"/>
+    <author initials="L." surname="Colitti" fullname="Lorenzo Colitti">
+      <organization>Google</organization>
+      <address>
+        <postal>
+          <street>Shibuya 3-21-3</street>
+          <country>Japan</country>
+        </postal>
+        <email>lorenzo@google.com</email>
+      </address>
+    </author>
     <author fullname="Jen Linkova" initials="J" surname="Linkova">
       <organization>Google</organization>
       <address>
@@ -238,7 +248,8 @@ A CLAT instance provides an IPv4 address and the default IPv4 route to the local
 However, the node can also extend the network downstream and provides IPv4 network connectivity to other connected systems.
 Those systems can be physical (e.g. various clients connected to a CPE router), or logical (e.g. virtual systems running on a node, while the host system acts as a router and performs CLAT). 
 In all those cases, systems behind the CLAT node usually use <xref target="RFC1918"/> addresses. 
-The CLAT instance can either translate these IPv4 addresses statelessly to IPv6 using a dedicated IPv6 prefix, or perform a stateful NAT44 between these IPv4 addresses and a dedicated CLAT IPv4 address, which is then statelessly translated to a single dedicated IPv6 address.
+The CLAT instance can either translate these IPv4 addresses statelessly to IPv6 using a dedicated IPv6 prefix as per <xref target="RFC6052"/>, or perform a stateful NAT44 between these IPv4 addresses and a dedicated CLAT IPv4 address, which is then statelessly translated to a single dedicated IPv6 address.
+In both cases, even with stateful NAT44, translation between IPv4 and IPv6 is stateless.
 </t>
 <t>
 This section only applies to a single dedicated IPv4 address which the CLAT instance uses for providing network connectivity only to local applications or using stateful NAT44 when extending network connectivity downstream.
@@ -287,21 +298,47 @@ The following recommendations are made instead:
 <ul>
 <li>
 <t>
-If the node is extending IPv4 connectivity downstream, the node 
-SHOULD obtain a dedicated /64 prefix (e.g. via DHCPv6-PD) for stateless translation of downstream IPv4 addresses unless it chooses to perform stateful NAT44 from the downstream IPv4 addresses to a single IPv4 address for stateless translation.
+If the node is extending IPv4 connectivity downstream, the node MUST either:
+</t>
+<ul>
+<li>
+<t>
+Obtain a dedicated prefix that satisfies the requirements in section 2.2 of <xref target="RFC6052"/> (e.g., via DHCPv6 PD), and statelessly translate downstream IPv4 addresses to IPv6 addresses in this prefix.
 </t>
 </li>
 <li>
 <t>
-If the CLAT instance only uses a single IPv4 address (including scenarios where the node is performing stateful NAT44 to that address), the instance SHOULD NOT obtain a dedicated /64 for the purpose of sending and receiving statelessly translated packets.
+Perform stateful NAT44 from the downstream IPv4 addresses to a single IPv4 address and then perform stateless translation of that single IPv4 address to a single dedicated IPv6 address.
+</t>
+</li>
+</ul>
+</li>
+<li>
+<t>
+If the CLAT instance only uses a single IPv4 address (including scenarios where the node is performing stateful NAT44 to that address), the instance SHOULD NOT obtain a dedicated prefix for the purpose of sending and receiving statelessly translated packets.
 </t>
 </li>
 </ul>
 
 <t>
 If the CLAT instance doesn't obtain a dedicated IPv6 prefix, the instance MUST obtain a dedicated IPv6 address used exclusively for CLAT functions. 
-This is needed to differentiate between inbound native IPv6 traffic and traffic which needs to be passed to the CLAT instance.
-For example:
+A dedicated address is needed because applications running on the CLAT node can use an IPv4 socket and an IPv6 socket to produce an IPv4 packet and an IPv6 packet that after translation are identical, and the CLAT has no way to know whether to translate those replies and pass them back to the IPv4 socket or pass them back to the IPv6 socket as is.
+For example, these two packets sent by the node will be identical after translation:
+</t>
+<ul>
+<li>
+<t>
+An IPv4 UDP packet from 192.0.0.4:12345 to 203.0.113.8:53
+</t>
+</li>
+<li>
+<t>
+An IPv6 UDP packet from the CLAT IPv6 address, port 12345 to [64:ff9b::203.0.113.8]:53
+</t>
+</li>
+</ul>
+<t>
+Similarly, responses (such as ICMP errors) to IPv4 and IPv6 packets may be identical when they arrive at the CLAT for translation back to IPv4. For example:
 </t>
 <ul>
 <li>
@@ -316,10 +353,8 @@ An ICMPv6 error packet from a global IPv6 address (not belonging to the NAT64 pr
 </li>
 </ul>
 <t>
-Using a dedicated IPv6 source address for CLAT traffic allows the node to make that distinction without keeping state, so CLAT can operate in the stateless mode (see Section 1.3 of <xref target="RFC7915"/>.
-In the absence of a dedicated address the CLAT instance would be required to use stateful NAT64.
-At the same time [RFC6877] defines 464XLAT as an architecure where the customer-side translation is stateless (it is even mentioned explictly in the [RFC6877] title.
-While it is possible to implement stateful client-side trabslation and use a single IPv6 address for both native and translated IPv6 packets, that approach doesn't fit the framework defined in [RFC6877] and, therefore, is out of scope of this document.
+Therefore, in the absence of dedicated addresses, the architecture would need additional stateful elements on the client side which are not part of 464XLAT as defined in <xref target="RFC6877"/>.
+Discussion of such architectures is beyond the scope of this document.
 </t>
 <t>
 If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local IPv4 CLAT address. See section 4.1 of <xref target="RFC6052"/>. 
