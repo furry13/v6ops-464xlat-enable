@@ -204,7 +204,9 @@ The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that t
 
 The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
 
-However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/>, the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>) only. The delay is implementation specific.
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/> the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>) only. 
+Such a delay minimizes the chance of temporary control of traffic by an attacker at the expense of delayed IPv4 connectivity through CLAT.
+The length of this optional delay is implementation specific.
 
 If IPv4 connectivity becomes available later, the node MUST disable CLAT (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
@@ -967,7 +969,7 @@ For illustrative purposes, the following diagram provides a high-level overview 
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Lorenzo Colitti, Jeremy Duncan, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
