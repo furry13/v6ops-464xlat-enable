@@ -192,7 +192,7 @@ The PREF64 Router Advertisement (RA) option (<xref target="RFC8781"/>) provides 
 Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement containing PREF64 option is received.
 </t>
 <t>
-If RAs received by the node do not contain a PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
+As per Section 3.1 of <xref target="RFC9872"/>, if RAs received by the node do not contain a PREF64 option, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
 Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the recursive resolvers provided by the network, not to the resolvers configured manually, local recursive resolvers etc..
@@ -709,8 +709,8 @@ If the attacker intercepts traffic for the NAT64 prefix (e.g., by providing the 
 Rogue RAs can also disturb traffic to destinations that support both IPv4 and IPv6 by causing IPv6 through an attacker's PLAT to be used instead of the legitimate network owner's IPv4 path.
 </t>
 <t>
-Using the PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks than DNS-based detection (<xref target="RFC7050"/>), as the attacker needs to be on-link and be able to bypass layer-2 security features such as RA Guard.
-Therefore <xref target="enable"/> recommends the PREF64 RA option as a preferred way to detect PLAT presence.
+Using the PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks than DNS-based detection (<xref target="RFC7050"/>), as the attacker needs to be on-link and be able to bypass layer-2 security features such as RA Guard (see Section 4 of <xref target="RFC9872"/> for more details).
+Therefore <xref target="enable"/> recommends the PREF64 RA option as a preferred way to detect PLAT presence, in accordance with <xref target="RFC9872"/>.
 </t>
 <t>
 The attack vector described above is not specific to 464XLAT deployments: security implications of rogue RAs have been discussed and documented before (see <xref target="RFC6104"/>). 
@@ -812,6 +812,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8585.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8900.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8978.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9872.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-slaac-renum.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-icmpext-xlat-v6only-source.xml"/>
@@ -969,7 +970,7 @@ For illustrative purposes, the following diagram provides a high-level overview 
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Nathan Sherrard, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
