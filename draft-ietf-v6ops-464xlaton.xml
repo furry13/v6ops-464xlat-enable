@@ -182,7 +182,7 @@ Consequently, each CLAT instance SHOULD install a separate default IPv4 route on
 <name>Enabling CLAT</name>
 
 <t>
-For performance and security reasons CLAT SHOULD NOT be enabled (unless explicitly configured otherwise) for an interface if that interface has native IPv4 connectivity over that interface (see <xref target="disable"/> for more details).
+For performance and security reasons CLAT SHOULD NOT be enabled (unless explicitly configured otherwise) for an interface if the node has native IPv4 connectivity over that interface (see <xref target="disable"/> for more details).
 Therefore, recommendations provided in this section are only applicable to the IPv6-only interfaces of a given node (the node has no native IPv4 connectivity via that interface).
 </t>
 
