@@ -88,7 +88,7 @@ IPv4-as-a-Service by providing recommendations for the node developers on enabli
       <name>Introduction</name>
 <t>
 464XLAT is widely deployed in 3GPP networks (as described in Section 4.2 of <xref target="RFC6877"/>) where User Equipment (UE) such as mobile phones and customer equipment (CE) routers perform the customer-side translation (CLAT) function, providing an IPv4 address and default route for applications and tethered devices.
-Enabling 464XLAT allowed mobile operators to transition UE to IPv6-only mode, where UE cellular interfaces have only IPv6 addresses, and no routable IPv4 addresses.
+Enabling 464XLAT allowed mobile operators to transition UE to IPv6-only mode, where UE cellular interfaces have only IPv6 addresses, and no forwardable IPv4 addresses.
 </t>
 <t>
 IPv6-only hosts used to be rather uncommon outside of mobile networks and datacenters.
