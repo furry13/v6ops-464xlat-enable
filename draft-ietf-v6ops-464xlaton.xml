@@ -74,7 +74,7 @@
  <t>
 464XLAT defines an architecture for providing IPv4 connectivity across an IPv6-only network.
 The solution involves two functional elements: provider-side translator (PLAT) and customer-side translator (CLAT).
-This document updates 464XLAT by further specifying CLAT node behavior and IPv6 Customer Edge Routers to Support
+This document updates the 464XLAT specification (RFC6877) by further defining CLAT node behavior and IPv6 Customer Edge Routers to Support
 IPv4-as-a-Service by providing recommendations for the node developers on enabling and disabling CLAT.
 </t>
 
