@@ -692,6 +692,14 @@ NEW TEXT
 </t>
 
 </section>
+
+<section anchor="ops">
+<name>Operational Considerations</name>
+<t>
+There are no new operations or manageability requirements for mobile networks introduced by this document.
+For non-mobile envinronments, such as datacenters, public Wi-Fi, or enterprise networks the operational considerations are documented in <xref target="I-D.ietf-v6ops-6mops"/> .
+</t>
+</section>
     <section anchor="Security">
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
@@ -818,6 +826,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-slaac-renum.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-icmpext-xlat-v6only-source.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-6mops.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.link-6man-gulla.xml"/>
 
       </references>
