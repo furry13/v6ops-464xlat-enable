@@ -227,9 +227,12 @@ While disabling CLAT is impactful for all applications and traffic flows already
 <xref target="Security"/> discusses this aspect in more details.
 </t>
 <t>
-When a node disables CLAT, it might indicate a network misconfiguration or an attack in progress. It may be useful for an administrator to receive signals when CLAT use turns on or off as well as changes to network-received configuration.
-Therefore the node SHOULD log the reason for disabling CLAT and any other changes to CLAT configuration or network signals CLAT is acting on to support administrator debugging and auditing.
-As logging is mostly beneficial in managed environments, the logging behaviour SHOULD be configurable. It MAY be disabled by default to avoid performance impacts when the likelihood of anyone consuming the logs is low.
+Native IPv4 connectivity, which subsequently causes CLAT to be disabled, might not be intended by the administrator.
+It could instead be the result of a network misconfiguration (such as accidentally enabling IPv4) or an attack (such as a rogue DHCPv4 server).
+In such cases it may be useful for an administrator to receive signals when CLAT turns on or off as well as changes to network-received configuration.
+Therefore the node SHOULD support logging the reason for disabling CLAT and any other changes to CLAT configuration or network signals CLAT is acting on to support administrator debugging and auditing.
+As logging is mostly beneficial in managed environments, the logging behaviour SHOULD be configurable.
+The logging SHOULD be disabled by default to avoid performance impacts when the likelihood of anyone consuming the logs is low.
 </t>
 <t>
 There are some corner cases when an administrator might prefer the node to use CLAT even if native IPv4 connectivity is available (e.g., for performance reasons, if IPv4-as-a-Service performs better than native IPv4). This behaviour might be desirable for devices which do not move between networks, such as servers or workstations, where the administrator might want to have CLAT enabled unconditionally. However for the reasons described above such behaviour MUST be explicitly enabled by the administrator via configuration and MUST NOT be a default behaviour, especially for unmanaged nodes.
