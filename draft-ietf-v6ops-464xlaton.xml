@@ -752,7 +752,7 @@ However, as of the time of this document's publication, it is much more likely t
       <name>Privacy Considerations</name>
       <t>
 This document does not introduce any new privacy considerations, but there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
-In particular, if a CLAT instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, the node SHOULD generate a different interface identifier for the CLAT address when connecting to different networks (see <xref target="slaac"/>).
+In particular, if a CLAT instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, <xref target="slaac"/> recommends that the node SHOULD generate a different interface identifier for the CLAT address when connecting to different networks.
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT.
