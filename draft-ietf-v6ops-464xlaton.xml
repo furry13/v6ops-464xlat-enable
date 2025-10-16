@@ -92,7 +92,7 @@ Enabling 464XLAT allowed mobile operators to transition UE to IPv6-only mode, wh
 </t>
 <t>
 IPv6-only hosts used to be rather uncommon outside of mobile networks and datacenters.
-Even if a network offers provider-side translator (PLAT) functionality in the form of NAT64 (<xref target="RFC6146"/>), hosts (desktops, laptops, etc.) still needed the network to provide IPv4 connectivity, as otherwise applications which require IPv4 would fail.
+Even if a network offers provider-side translator (PLAT) functionality in the form of NAT64 <xref target="RFC6146"/>, hosts (desktops, laptops, etc.) still needed the network to provide IPv4 connectivity, as otherwise applications which require IPv4 would fail.
 However, as more and more operating systems outside of the 3GPP world support CLAT, it becomes possible to migrate those devices to IPv6-only mode, while still providing IPv4-as-a-Service via 464XLAT.
 Networks such as public Wi-Fi, enterprise networks, or even home networks can deploy 464XLAT as described in Section 4.2 of <xref target="RFC6877"/>:
 </t>
@@ -153,7 +153,7 @@ IPv4-only application: An application which requires the presence of an IPv4 add
 </li>
 <li>
 <t>
-IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 (<xref target="RFC6146"/>). In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it is required by the 464XLAT architecture (<xref target="RFC6877"/>).
+IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 <xref target="RFC6146"/>. In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it is required by the 464XLAT architecture <xref target="RFC6877"/>.
 </t>
 </li>
 <li>
@@ -188,7 +188,7 @@ Therefore, recommendations provided in this section are only applicable to the I
 
 <t>
 To enable CLAT, an IPv6-only node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
-The PREF64 Router Advertisement (RA) option (<xref target="RFC8781"/>) provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
+The PREF64 Router Advertisement (RA) option <xref target="RFC8781"/> provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
 Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement containing a PREF64 option is received.
 </t>
 <t>
@@ -204,7 +204,7 @@ The node SHOULD enable CLAT after discovering the NAT64 prefix, unless by that t
 
 The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP timeouts) indication that native IPv4 connectivity is not available.
 
-However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/> the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS (<xref target="RFC7050"/>) only. 
+However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/> the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS <xref target="RFC7050"/> only. 
 Such a delay minimizes the chance of temporary control of traffic by an attacker at the expense of delayed IPv4 connectivity through CLAT.
 The length of this optional delay is implementation specific.
 
@@ -262,7 +262,7 @@ This section only applies to a single dedicated IPv4 address which a CLAT instan
 </t>
 <t>
 A CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
-A node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range (<xref target="RFC7335"/>), reserved for IPv4 continuity solutions including but not limited to 464XLAT.
+A node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range <xref target="RFC7335"/>, reserved for IPv4 continuity solutions including but not limited to 464XLAT.
 If the node runs multiple CLAT instances (see <xref target="multihomed"/>), the node SHOULD use different local IPv4 addresses for each CLAT instance.
 This approach limits the number of CLAT instances per node to 8, which seems to be more than sufficient for typical configurations at the time this document was published. 
 If in the future some deployment scenarios require more than 8 CLAT instances per node, a new IPv4 range will be requested from IANA.
@@ -408,7 +408,7 @@ Additionally, real world deployment experience shows that network infrastructure
 </ul>
 </li>
 <li>
-<t> The node MUST process received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address (<xref target="RFC4861"/>) for the node CLAT addresses.
+<t> The node MUST process received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address <xref target="RFC4861"/> for the node CLAT addresses.
 </t>
 <ul>
 <li>
@@ -419,7 +419,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </ul>
 </li> 
 <li>
-<t>If the node supports Gratuitous Neighbor Advertisements (<xref target="RFC9131"/>), the node SHOULD send them for the CLAT addresses.</t>
+<t>If the node supports Gratuitous Neighbor Advertisements <xref target="RFC9131"/>, the node SHOULD send them for the CLAT addresses.</t>
 <ul>
 <li>
 <t> Justification: not following this recommendation leads to user-visible packet loss when the CLAT instance starts receiving traffic after period of inactivity, or when connected to the network for the first time. The problem is discussed in Section 2 of <xref  target="RFC9131"/>.</t>
@@ -428,7 +428,7 @@ Justification: If a node doesn't respond to unicast NSes, anytime the first-hop 
 </li>
 <li>
 <t>
-The node which has the address registration using DHCPv6 (<xref target="RFC9686"/>) enabled MUST register the CLAT addresses if the network supports the registration.
+The node which has the address registration using DHCPv6 <xref target="RFC9686"/> enabled MUST register the CLAT addresses if the network supports the registration.
 </t>
 <ul> 
 <li> 
@@ -453,7 +453,7 @@ When routers on a given link are managed independently (e.g., by different ISPs)
 For example, if router_A advertises a PIO with prefix_A and PREF64_A, while router_B advertises a PIO with prefix_B and a PREF64_B, it is crucial that the CLAT bundles the information received from each router.
 A CLAT instance must use PREF64_A and generate a CLAT address from prefix_A, sending translated packets to router_A.  Alternatively, it must use PREF64_B, generate an address from prefix_B, and send translated packets to router_B. 
 Mixing configuration information from different routers (e.g., generating a CLAT address from prefix_A but using PREF64_B for translation) can lead to packet loss.
-For example, if packets with source addresses from prefix_A are sent to router_B, that router (or the uplink network) might drop the packets according to BCP 38 (<xref target="RFC2827"/>).
+For example, if packets with source addresses from prefix_A are sent to router_B, that router (or the uplink network) might drop the packets according to BCP 38 <xref target="RFC2827"/>.
 Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those packets are sent to router_B, that router might not be configured to translate packets for that prefix.
 </t>
 
@@ -696,7 +696,7 @@ NEW TEXT
       <!-- All drafts are required to have a security considerations section. See RFC 3552 for a guide. -->
       <name>Security Considerations</name>
 <t>
-If a malicious actor spoofs PLAT presence signals (such as an RA with PREF64 option) or DNS responses for DNS-based NAT64 prefix detection (<xref target="RFC7050"/>), traffic of IPv4-only applications using CLAT can be affected:
+If a malicious actor spoofs PLAT presence signals (such as an RA with PREF64 option) or DNS responses for DNS-based NAT64 prefix detection <xref target="RFC7050"/>, traffic of IPv4-only applications using CLAT can be affected:
 </t>
 <ul>
 <li>
