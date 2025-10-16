@@ -115,7 +115,7 @@ In another variation of the 464XLAT deployment (Section 4.1 of <xref target="RFC
 While Section 6 of <xref target="RFC6877"/> discusses implementation considerations for the 464XLAT architecture, there is a need for more detailed guidance for CLAT implementations.
 The increase in IPv6-only deployments has provided valuable operational experience, which has revealed gaps in existing CLAT requirements.
 
-This document addresses these gaps by specifying normative behavior and providing recommendations for implementing CLAT functions. For example, it provides guidance on how CLAT-enabled nodes (such as a host or a CE router) should enable CLAT when connecting to an IPv6-only network and how they should react to network changes to minimize negative impact on user traffic.
+This document addresses these gaps by specifying normative behavior and providing recommendations for implementing CLAT functions. For example, it provides guidance on how CLAT nodes (such as a host or a CE router) should enable CLAT when connecting to an IPv6-only network and how they should react to network changes to minimize negative impact on user traffic.
 
 This document compliments and updates <xref target="RFC6877"/> and <xref target="RFC8585"/>.
 
@@ -294,7 +294,7 @@ Section 6.3 of <xref target="RFC6877"/> recommends that a CLAT instance acquires
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments such as enterprise networks and Wi-Fi hotspots.
 Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
 In particular, if the CLAT only provides the IPv4 connectivity to applications local to the node (or if the node chooses to perform stateful NAT44) the CLAT instance only needs a single CLAT IPv6 address, so obtaining a /64 is wasteful.
-For instance, a home network that gets a /60 from its ISP can only connect up to 15 CLAT-enabled devices before it runs out of available prefixes.
+For instance, a home network that gets a /60 from its ISP can only connect up to 15 CLAT devices before it runs out of available prefixes.
 Even if the node extends IPv4 connectivity downstream, the CLAT instance can first perform stateful NAT44 to translate all IPv4 addresses used by downstream devices to a single IPv4 address, and then perform stateless CLAT. 
 </t>
 <t>
@@ -751,7 +751,7 @@ A man-in-the-middle attack by acting as an IPv4 default gateway for the victim n
 <t>
 It should be noted that such attacks are not specific to the CLAT scenario, and can occur in IPv4-only or dual-stack networks as well.
 Various well-known Layer 2 security techniques (such as DHCP snooping) are available and considered a best practice in IPv4-enabled deployments.
-To mitigate rogue DHCPv4 server attacks on CLAT-enabled nodes, network administrators can deploy DHCPv4-related security features even if the network is expected to operate in IPv6-only mode.
+To mitigate rogue DHCPv4 server attacks on CLAT nodes, network administrators can deploy DHCPv4-related security features even if the network is expected to operate in IPv6-only mode.
 </t>
 <t>
 As discussed above, disabling CLAT in the presence of native IPv4 connectivity helps mitigating RA-based attacks but enables DHCPv4-based attack vectors, if the network lacks Layer 2 security features.
