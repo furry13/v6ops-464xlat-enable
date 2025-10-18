@@ -732,7 +732,7 @@ To prevent such an attack, IPv6-enabled networks need to secure RAs, e.g., by de
 However, networks without explicit (intentional) IPv6 deployment are inherently IPv6-ignorant, and consequently might lack IPv6 security features.
 In such networks IPv6-enabled endpoints may be inadvertently exposed to link-local IPv6 connectivity.
 This unintended exposure can facilitate PLAT presence signal falsification, as described above.
-This document mitigates this risk by requiring endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
+This document mitigates this risk by recommending endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
 </t>
 <t>
 However, the recommended behaviour (disabling CLAT in the presence of native IPv4 connectivity) introduces another attack vector: a rogue DHCPv4 server.
@@ -757,8 +757,11 @@ Various well-known Layer 2 security techniques (such as DHCP snooping) are avail
 To mitigate rogue DHCPv4 server attacks on CLAT nodes, network administrators can deploy DHCPv4-related security features even if the network is expected to operate in IPv6-only mode.
 </t>
 <t>
-As discussed above, disabling CLAT in the presence of native IPv4 connectivity helps mitigating RA-based attacks but enables DHCPv4-based attack vectors, if the network lacks Layer 2 security features.
-However, as of the time of this document's publication, it is much more likely that an IPv4-only network lacks IPv6 security than an IPv6-only network not having IPv4 Layer 2 security features deployed.
+As discussed, disabling CLAT when native IPv4 connectivity is present helps mitigate RA-based attacks but enables DHCPv4-based attack vectors if the network lacks Layer 2 security features.
+The choice between disabling CLAT when native IPv4 connectivity is present and keeping it enabled is dictated by the threat model and risk assessment. 
+At the time of this document's publication, it is much more likely that an IPv4-only network lacks IPv6 security than an IPv6-only network not having IPv4 Layer 2 security features deployed. 
+Therefore, this document prescribes that the node SHOULD disable CLAT if native IPv4 connectivity is present.
+The choice of SHOULD, rather than MUST, is determined by considerations of future compatibility: nodes operating in environments where rogue RAs are no more likely than rogue DHCP servers might choose to keep CLAT enabled, while still complying with this specification.
 </t>
     </section>
 
