@@ -732,7 +732,7 @@ To prevent such an attack, IPv6-enabled networks need to secure RAs, e.g., by de
 However, networks without explicit (intentional) IPv6 deployment are inherently IPv6-ignorant, and consequently might lack IPv6 security features.
 In such networks IPv6-enabled endpoints may be inadvertently exposed to link-local IPv6 connectivity.
 This unintended exposure can facilitate PLAT presence signal falsification, as described above.
-This document mitigates this risk by recommending endpoints to disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
+This document mitigates this risk by recommending that endpoints disable CLAT when the network provides non-link-local IPv4 connectivity, as outlined in <xref target="disable"/>.
 </t>
 <t>
 However, the recommended behaviour (disabling CLAT in the presence of native IPv4 connectivity) introduces another attack vector: a rogue DHCPv4 server.
