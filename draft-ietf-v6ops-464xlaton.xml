@@ -184,6 +184,12 @@ The PREF64 Router Advertisement (RA) option <xref target="RFC8781"/> provides th
 Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement containing a PREF64 option is received.
 </t>
 <t>
+Discussion: this document does not require that a node MUST enable CLAT upon receiving an RA because enabling CLAT by default may be undesirable in certain scenarios.
+First, in a controlled deployment environment, an administrator might explicitly prefer that the node not have CLAT enabled.
+Second, CLAT is a transition technology whose operational utility diminishes over time.
+Even where CLAT is supported, default enablement may eventually become unnecessary.
+</t>
+<t>
 A node may have multiple IPv6-only interfaces (for example, a mobile phone can be connected to an IPv6-only Wi-Fi network and to an IPv6-only mobile network).
 In that case the node SHOULD run an independent, dedicated CLAT instance on each interface connected to a network equipped with PLAT.
 Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
