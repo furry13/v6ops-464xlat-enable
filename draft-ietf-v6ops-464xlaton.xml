@@ -186,7 +186,7 @@ Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement
 <t>
 Discussion: this document does not require that a node MUST enable CLAT upon receiving an RA because enabling CLAT by default may be undesirable in certain scenarios.
 First, in a controlled deployment environment, an administrator might explicitly prefer that the node not have CLAT enabled.
-Second, CLAT is a transition technology whose operational utility diminishes over time.
+Second, CLAT is an IPv6 transition technology whose operational utility will diminish as IPv4 dependencies become less common.
 Even where CLAT is supported, default enablement may eventually become unnecessary.
 </t>
 <t>
