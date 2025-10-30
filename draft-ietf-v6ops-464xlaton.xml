@@ -143,12 +143,12 @@ This document reuses most of the terminology from Section 2 of <xref target="RFC
 <ul>
 <li>
 <t>
-CLAT Node: a node (a host or a router) which performs CLAT functions by running one or multiple CLAT instances (e.g., one CLAT instance per interface).
+CLAT Node: a node (a host or a router) which performs Customer transLATion functions by running one or multiple CLAT instances (e.g., one CLAT instance per interface).
 </t>
 </li>
 <li>
 <t>
-IPv4-only application: An application which requires the presence of an IPv4 address and/or IPv4 default route to operate. Examples include, but are not limited to, applications using IPv4 address literals or opening IPv4-only sockets. 
+IPv4-only application: An application which requires the presence of an IPv4 address and/or IPv4 default route to operate. Examples include, but are not limited to, applications using IPv4 address literals or opening IPv4-only sockets.
 </t>
 </li>
 <li>
