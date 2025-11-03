@@ -769,7 +769,7 @@ The choice of SHOULD, rather than MUST, is determined by considerations of futur
       <name>Privacy Considerations</name>
       <t>
 This document does not introduce any new privacy considerations, but there are some existing privacy considerations not documented in <xref target="RFC6877"/>. 
-In particular, if a CLAT instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, <xref target="slaac"/> recommends that the node SHOULD generate a different interface identifier for the CLAT address when connecting to different networks.
+In particular, if a CLAT instance utilizes the same CLAT IPv6 address for an extensive period of time or, much worse, uses the same interface ID for the CLAT address when connecting to different networks, eavesdroppers and information collectors could potentially correlate various network activity to the same node. To mitigate that risk and make address-based network-activity correlation more difficult, <xref target="slaac"/> recommends that the node SHOULD generate a different interface identifier for the CLAT address when connecting to different networks.
 </t>
 <t>
 It should be noted that the node's CLAT IPv6 address is only used (and visible to observers) when the traffic is carried from the CLAT node to the PLAT.
@@ -987,7 +987,7 @@ For illustrative purposes, the following diagram provides a high-level overview 
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Nathan Sherrard, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Michael Richardson, Nathan Sherrard, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
