@@ -366,7 +366,7 @@ Therefore, in the absence of dedicated IPv6 addresses, the architecture would ne
 Discussion of such architectures is beyond the scope of this document.
 </t>
 <t>
-If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD ensure that the address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local CLAT IPv4 address. See Section 4.1 of <xref target="RFC6052"/>. 
+If the dedicated CLAT address is obtained via Stateless Address Autoconfiguration (SLAAC, <xref target="RFC4862"/>), the CLAT instance SHOULD choose the interface ID in such a way that the resulting CLAT IPv6 address is checksum-neutral. This means the CLAT IPv6 address has the same complement checksum as the local CLAT IPv4 address. See Section 4.1 of <xref target="RFC6052"/>. 
 This means that the local IPv4 address needs to be assigned/known before the IPv6 address is configured.
 Using a checksum-neutral CLAT address provides the following benefits:
 </t>
