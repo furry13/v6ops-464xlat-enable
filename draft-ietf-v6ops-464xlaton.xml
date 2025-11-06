@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-v6ops-claton-11"
+  docName="draft-ietf-v6ops-claton-12"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Behavior and Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-11"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-12"/>
     <author initials="L." surname="Colitti" fullname="Lorenzo Colitti">
       <organization>Google</organization>
       <address>
@@ -74,7 +74,8 @@
  <t>
 464XLAT defines an architecture for providing IPv4 connectivity across an IPv6-only network.
 The solution involves two functional elements: provider-side translator (PLAT) and customer-side translator (CLAT).
-This document updates the 464XLAT specification (RFC6877) by further defining CLAT node behavior and IPv6 Customer Edge Routers to Support
+This document updates the 464XLAT specification (RFC6877) and Requirements for IPv6 Customer Edge Routers (RFC8585)
+by further defining CLAT node behavior and IPv6 Customer Edge Routers to Support
 IPv4-as-a-Service by providing recommendations for the node developers on enabling and disabling CLAT.
 </t>
 
@@ -180,8 +181,9 @@ Therefore, recommendations provided in this section are only applicable to the I
 
 <t>
 To enable CLAT, an IPv6-only node needs to discover the PLAT-side translation IPv6 prefix, also known as the NAT64 prefix (see Section 6.3 of <xref target="RFC6877"/>).
-The PREF64 Router Advertisement (RA) option <xref target="RFC8781"/> provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
-Therefore an IPv6-only node SHOULD enable CLAT as soon as a Router Advertisement containing a PREF64 option is received.
+For example, the PREF64 Router Advertisement (RA) option <xref target="RFC8781"/> provides that information and can be used as a strong indication that the network supports PLAT (NAT64) functionality.
+In some cases, a node might configure its IPv6 stack without receiving an RA (for example, via HTTP Capsules, see  <xref target="I-D.ietf-masque-connect-ip-dns"/>).
+Therefore an IPv6-only node SHOULD enable CLAT as soon as it receives a PREF64 option from the network.
 </t>
 <t>
 Discussion: this document does not require that a node MUST enable CLAT upon receiving an RA because enabling CLAT by default may be undesirable in certain scenarios.
@@ -195,7 +197,7 @@ In that case the node SHOULD run an independent, dedicated CLAT instance on each
 Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
 </t>
 <t>
-Per Section 3.1 of <xref target="RFC9872"/>, if RAs received by the node do not contain a PREF64 option, the node is allowed use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).
+If the node does not receive a PREF64 from the network, the node is allowed use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more details.
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
 Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the DNS resolvers provided through the specific network interface, not to any resolvers configured manually or otherwise.
@@ -209,7 +211,8 @@ The node SHOULD NOT wait for an explicit (DHCP Option 108) or an implicit (DHCP 
 
 However, to mitigate attacks described in Section 7 of <xref target="RFC7050"/> the node MAY delay enabling CLAT if the NAT64 prefix was discovered via DNS <xref target="RFC7050"/> only. 
 Such a delay minimizes the chance of temporary control of traffic by an attacker at the expense of delayed IPv4 connectivity through CLAT.
-The length of this optional delay is implementation specific.
+The length of this optional delay is implementation specific and might, for example, be calculated heuristically based on previous observations for the given network attachment.
+Nodes implementing this delay MAY provide a configuration option to disable the delay.
 
 If native IPv4 connectivity becomes available later for a given interface, the node SHOULD disable CLAT for that interface (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
@@ -832,6 +835,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-slaac-renum.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-icmpext-xlat-v6only-source.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-masque-connect-ip-dns.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-v6ops-6mops.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.link-6man-gulla.xml"/>
 
