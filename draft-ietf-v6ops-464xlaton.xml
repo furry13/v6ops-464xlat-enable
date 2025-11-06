@@ -197,7 +197,7 @@ In that case the node SHOULD run an independent, dedicated CLAT instance on each
 Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
 </t>
 <t>
-If the node does not receive a PREF64 from the network, the node is allowed use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more details.
+If the node does not receive a PREF64 from the network, the node is allowed use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more detail.
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
 Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the DNS resolvers provided through the specific network interface, not to any resolvers configured manually or otherwise.
