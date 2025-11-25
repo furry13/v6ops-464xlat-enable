@@ -479,7 +479,7 @@ A node discovering multiple routers on the same interface advertising the <em>sa
 </t>
 <t>
 A node can discover multiple routers on the same interface signalling <em>different PIOs and NAT64 prefixes</em>.
-In that case, the node MAY create one CLAT instance for each tuple of PIOs and NAT64 prefix (both PIO and NAT64 prefix in a given tuple MUST be advertised by the same router).
+In that case, the node MAY create one CLAT instance for each tuple of PIO and NAT64 prefix (both PIO and NAT64 prefix in a given tuple MUST be advertised by the same router).
 Alternatively, the node MAY create only a single CLAT instance using the NAT64 prefix discovered through the selected IPv6 default router and the address formed from a PIO advertised by that router.  
 </t>
 
