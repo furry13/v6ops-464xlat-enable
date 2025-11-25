@@ -524,7 +524,7 @@ As discussed above, a single CLAT instance per interface, using a single PIO, is
 However, PIO selection can significantly impact user experience during link renumbering. 
 </t>
 <t>
-<xref target="RFC8978"/> discusses various examples of "flash renumbering," where the IPv6 prefix assigned to the link changes without explicit host notification. 
+<xref target="RFC8978"/> discusses various examples of "flash renumbering", where the IPv6 prefix assigned to the link changes without explicit host notification. 
 
 <xref target="I-D.ietf-6man-slaac-renum"/> and <xref target="I-D.link-6man-gulla"/> discuss methods to mitigate the impact of flash renumbering.  These methods generally rely on hosts with addresses from both old and new prefixes ceasing use of the old prefix and adopting the new prefix.
 For nodes running CLAT instances, this requires disabling instances using addresses from the old prefix and creating an instance using an address from the new prefix.
@@ -544,7 +544,7 @@ A prefix used to form the CLAT address becomes deprecated or invalid (<xref targ
 The router (or routers) advertising the PIO used to form the CLAT address</t>
 <ul>
 <li>
-<t> has changed it state from being reachable or probably reachable to being unknown or suspect (i.e., it's neighbor cache entry moved to the 'INCOMPLETE' state or ceased to exist, see Section 6.3.6 of <xref target="RFC4861"/>).</t>
+<t> has changed its state from being reachable or probably reachable to being unknown or suspect (i.e., it's neighbor cache entry moved to the 'INCOMPLETE' state or ceased to exist, see Section 6.3.6 of <xref target="RFC4861"/>).</t>
 </li>
 <li>
 <t>
@@ -728,6 +728,7 @@ Rogue RAs can also disturb traffic to destinations that support both IPv4 and IP
 <t>
 Using the PREF64 RA option to detect PLAT presence and the NAT64 prefix is less prone to such attacks than DNS-based detection (<xref target="RFC7050"/>), as the attacker needs to be on-link and be able to bypass layer-2 security features such as RA Guard (see Section 4 of <xref target="RFC9872"/> for more details).
 Therefore <xref target="enable"/> recommends the PREF64 RA option as a preferred way to detect PLAT presence, in accordance with <xref target="RFC9872"/>.
+If DNS-based detection (<xref target="RFC7050"/>) is necessary for other deployment reasons, the risk of local attack can be reduced by using encrypted DNS protocols and advertising the resolvers using RA options (<xref target="RFC9463"/>).
 </t>
 <t>
 The attack vector described above is not specific to 464XLAT deployments: security implications of rogue RAs have been discussed and documented before (see <xref target="RFC6104"/>). 
