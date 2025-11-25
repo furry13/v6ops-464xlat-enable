@@ -197,7 +197,7 @@ In that case the node SHOULD run an independent, dedicated CLAT instance on each
 Consequently, each CLAT instance SHOULD install a separate default IPv4 route on each CLAT-enabled interface.
 </t>
 <t>
-If the node does not receive a PREF64 from the network, the node is allowed use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more detail.
+If the node does not receive a PREF64 from the network, the node is allowed to use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more detail.
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
 Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the DNS resolvers provided through the specific network interface, not to any resolvers configured manually or otherwise.
@@ -581,6 +581,15 @@ Therefore, to minimize undesirable IP fragmentation (<xref target="RFC8900"/>), 
 </section>
 
 <section anchor="update">
+<name>Updates to Existing RFCs</name>
+<section anchor="update6877">
+<name>Updates to RFC6877</name>
+<t>
+This document updates Section 6.3 of <xref target="RFC6877"/> by relaxing the requirement to acquire a dedicated /64 prefix for the purpose of sending and receiving statelessly translated packets.
+More details on the recommended node behaviour can be found in <xref target="slaac"/>.
+</t>
+</section>
+<section anchor="update8585">
 <name>
 Updates to RFC8585
 </name>
@@ -697,6 +706,7 @@ NEW TEXT
 ===
 </t>
 
+</section>
 </section>
 
 <section anchor="ops">
@@ -817,6 +827,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9131.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9463.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9686.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9872.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-rfc6724-update.xml"/>
@@ -992,7 +1003,7 @@ For illustrative purposes, the following diagram provides a high-level overview 
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, George Michaelson, Jordi Palet, Michael Richardson, Nathan Sherrard, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Menachem Dodge, Jeremy Duncan, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, Nicolai Leymann, George Michaelson, Jordi Palet, Michael Richardson, Nathan Sherrard, Dieter Siegmund, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
