@@ -229,7 +229,7 @@ It is possible that after a CLAT instance has started, native IPv4 connectivity 
 Unless explicitly configured otherwise, the node SHOULD disable CLAT immediately upon obtaining a native IPv4 default gateway.
 </t>
 <t>
-While disabling CLAT is impactful for all applications and traffic flows already utilizing CLAT, disabling CLAT is recommended not only from a performance perspective, but also from a security point of view.
+While disabling CLAT when native IPv4 connectivity is available can be impactful for all applications and traffic flows already utilizing CLAT, disabling CLAT is recommended not only from a performance perspective, but also from a security point of view.
 <xref target="Security"/> discusses this aspect in more details.
 </t>
 <t>
