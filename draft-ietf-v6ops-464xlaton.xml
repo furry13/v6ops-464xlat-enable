@@ -193,7 +193,8 @@ Even where CLAT is supported, default enablement may eventually become unnecessa
 </t>
 <t>
 A node may have multiple IPv6-only interfaces (for example, a mobile phone can be connected to an IPv6-only Wi-Fi network and to an IPv6-only mobile network).
-In that case the node MUST run an independent, dedicated CLAT instance on each interface connected to a network equipped with PLAT.
+The node MAY choose to enable CLAT on a subset of its interfaces connected to networks equipped with PLAT.
+In that case the node MUST run an independent, dedicated CLAT instance on each interface the node chooses to enable CLAT on.
 Consequently, each CLAT instance MUST install a separate default IPv4 route on each CLAT-enabled interface.
 </t>
 <t>
