@@ -270,7 +270,8 @@ This section only applies to a single dedicated IPv4 address which a CLAT instan
 </t>
 <t>
 A CLAT instance needs a single IPv4 CLAT address and a single CLAT-only IPv6 address (which is distinct from the one or more IPv6 addresses used by the node running CLAT for its own native IPv6 connectivity, see <xref target="slaac"/>).
-A node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range <xref target="RFC7335"/>, reserved for IPv4 continuity solutions including but not limited to 464XLAT.
+A node providing CLAT functions to local applications SHOULD use IPv4 addresses from the dedicated 192.0.0.0/29 range <xref target="RFC7335"/> because it is reserved for IPv4 continuity solutions including but not limited to 464XLAT.
+Use of other source IP addresses is technically possible but might result in incorrect assumptions made by other processes relying on the presence of a source IPv4 address with a 192.0.0.0/29 prefix to determine if an IPv4 continuity solution is being used.
 If the node runs multiple CLAT instances, the node SHOULD use different local IPv4 addresses for each CLAT instance.
 This approach limits the number of CLAT instances per node to 8, which seems to be more than sufficient for typical configurations at the time of this writing. 
 If in the future some deployment scenarios require more than 8 CLAT instances per node, a new IPv4 range will be requested from IANA.
@@ -416,12 +417,12 @@ Additionally, real world deployment experience shows that network infrastructure
 </ul>
 </li>
 <li>
-<t> The node MUST process received unicast Neighbor Solicitations (NSes) as well as multicast ones sent to the solicited-node multicast address <xref target="RFC4861"/> for the node CLAT addresses.
+<t> The node MUST process Neighbor Solicitations (NSes) for the node's CLAT addresses from any source the node would process NSes for a non-CLAT address to avoid unexpected packet loss for applications.
 </t>
 <ul>
 <li>
 <t>
-Justification: If a node doesn't respond to unicast NSes, anytime the first-hop router gets a packet for the CLAT address and its Neighbor Cache entry is 'STALE' (Section 7.3.2 of <xref target="RFC4861"/>), the Neighbor Unreachability Detection process (Section 7.3.3 of <xref target="RFC4861"/>) will delete that CLAT address's cache entry. This forces the address resolution process to restart from scratch. Until resolution finishes, traffic for the CLAT address might drop, leading to a degraded user experience, especially for applications sensitive to jitter and packet loss.
+Justification: A simple example is if a node doesn't respond to unicast NSes, anytime the first-hop router gets a packet for the CLAT address and its Neighbor Cache entry is 'STALE' (Section 7.3.2 of <xref target="RFC4861"/>), the Neighbor Unreachability Detection process (Section 7.3.3 of <xref target="RFC4861"/>) will delete that CLAT address's cache entry. This forces the address resolution process to restart from scratch. Until resolution finishes, traffic for the CLAT address might drop, leading to a degraded user experience, especially for applications sensitive to jitter and packet loss.
 </t>
 </li>
 </ul>
@@ -580,7 +581,7 @@ The IPv4 header is 20 bytes long (or longer if IP options are present), while th
 This means that when CLAT translates an IPv4 packet to IPv6, it usually adds 20 bytes to the packet size.
 However, when CLAT translates a fragmented IPv4 packet, then Fragment Header needs to be added to the resulting IPv6 packet (Section 4.1 of <xref target="RFC7915"/>).
 The length of IPv6 Fragment Extension header is 8 bytes (Section 4.5 of <xref target="RFC8200"/>).
-Therefore, to minimize undesirable IP fragmentation (<xref target="RFC8900"/>), the CLAT instance SHOULD present IPv4-only applications with an IPv4 MTU which is 28 bytes smaller than the IPv6 MTU of the interface the instance is running on.
+Therefore, the CLAT instance SHOULD present IPv4-only applications with an IPv4 MTU which is 28 bytes smaller than the IPv6 MTU of the interface the instance is running on because anything higher risks undesirable IP fragmentation (<xref target="RFC8900"/>) and anything lower artifically restricts packet sizes for no benefit.
 </t>
 </section>
 
