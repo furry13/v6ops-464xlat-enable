@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-v6ops-claton-13"
+  docName="draft-ietf-v6ops-claton-14"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Behavior and Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-13"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-14"/>
     <author initials="L." surname="Colitti" fullname="Lorenzo Colitti">
       <organization>Google</organization>
       <address>
@@ -827,7 +827,6 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8200.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8880.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8174.xml"/>
-	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8415.xml"/>
 	<xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8585.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8781.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8925.xml"/>
@@ -836,6 +835,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9686.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9872.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-rfc6724-update.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dhc-rfc8415bis.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
