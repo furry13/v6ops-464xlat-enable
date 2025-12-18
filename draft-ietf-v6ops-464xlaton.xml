@@ -118,7 +118,7 @@ The increase in IPv6-only deployments has provided valuable operational experien
 
 This document addresses these gaps by specifying normative behavior and providing recommendations for implementing CLAT functions. For example, it provides guidance on how CLAT nodes (such as a host or a CE router) should enable CLAT when connecting to an IPv6-only network and how they should react to network changes to minimize negative impact on user traffic.
 
-This document compliments and updates <xref target="RFC6877"/> and <xref target="RFC8585"/>.
+This document complements and updates <xref target="RFC6877"/> and <xref target="RFC8585"/>.
 
 </t>
 
@@ -154,7 +154,7 @@ IPv4-only application: An application that requires the presence of an IPv4 addr
 </li>
 <li>
 <t>
-IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 <xref target="RFC6146"/>. In this document, the term "IPv6-only network" specifically refers to networks that provide NAT64 as it is required by the 464XLAT architecture <xref target="RFC6877"/>.
+IPv6-only network: A network that does not assign IPv4 addresses to hosts and facilitates connectivity to IPv4-only destinations using NAT64 <xref target="RFC6146"/> as it is required by the 464XLAT architecture <xref target="RFC6877"/>.
 </t>
 </li>
 <li>
@@ -198,7 +198,7 @@ In that case the node MUST run an independent, dedicated CLAT instance on each i
 Consequently, each CLAT instance MUST install a separate default IPv4 route on each CLAT-enabled interface.
 </t>
 <t>
-If the node does not receive a PREF64 from the network, the node is allowed to use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more detail.
+If the node does not receive a PREF64 from the network, the node MAY use other mechanisms to detect the PLAT presence and obtain the NAT64 prefix (such as <xref target="RFC7050"/>).  Section 3.1 of <xref target="RFC9872"/> discusses this approach in more detail.
 When discovering the NAT64 prefix using the mechanism defined in <xref target="RFC7050"/>, the node MUST follow recommendations provided in <xref target="RFC8880"/>.
 Specifically, the node MUST send the query to the DNS servers for the specific network interface per Section 7.1 of <xref target="RFC8880"/>. 
 In particular, queries for AAAA resource records of "ipv4only.arpa." MUST be sent to the DNS resolvers provided through the specific network interface, not to any resolvers configured manually or otherwise.
@@ -277,7 +277,7 @@ This approach limits the number of CLAT instances per node to 8, which seems to 
 If in the future some deployment scenarios require more than 8 CLAT instances per node, a new IPv4 range will be requested from IANA.
 </t>
 <t>
-The node MUST NOT send packets on the wire from the local CLAT addresses.
+The node MUST NOT send packets to the network from the local CLAT addresses.
 </t>
 <t>
 The node SHOULD use 255.255.255.255 as a netmask for the CLAT address.
@@ -299,7 +299,7 @@ CLAT IPv6 Addresses
 <section anchor="slaac">
 <name>Obtaining CLAT IPv6 Addresses</name>
 <t>
-Section 6.3 of <xref target="RFC6877"/> recommends that a CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD <xref target="RFC8415"/>.
+Section 6.3 of <xref target="RFC6877"/> recommends that a CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD <xref target="I-D.ietf-dhc-rfc8415bis"/>.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments such as enterprise networks and Wi-Fi hotspots.
 Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
 In particular, if the CLAT only provides the IPv4 connectivity to applications local to the node (or if the node chooses to perform stateful NAT44) the CLAT instance only needs a single CLAT IPv6 address, so obtaining a /64 is wasteful.
