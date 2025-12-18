@@ -417,7 +417,7 @@ Additionally, real world deployment experience shows that network infrastructure
 </ul>
 </li>
 <li>
-<t> The node MUST process Neighbor Solicitations (NSes) for the node's CLAT addresses from any source the node would process NSes for a non-CLAT address to avoid unexpected packet loss for applications.
+<t> The node MUST process  unicast and multicast Neighbor Solicitations (NSes) for the node's CLAT addresses the same way the node would process NSes for a non-CLAT address. This is to avoid unexpected packet loss for applications.
 </t>
 <ul>
 <li>
