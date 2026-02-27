@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-v6ops-claton-14"
+  docName="draft-ietf-v6ops-claton-15"
   ipr="trust200902"
   obsoletes=""
   updates="6877, 8585"
@@ -25,7 +25,7 @@
   version="3">
   <front>
 <title abbrev="claton">464XLAT Customer-side Translator (CLAT): Node Behavior and Recommendations</title>
-    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-14"/>
+    <seriesInfo name="Internet-Draft" value="draft-ietf-v6ops-claton-15"/>
     <author initials="L." surname="Colitti" fullname="Lorenzo Colitti">
       <organization>Google</organization>
       <address>
@@ -215,7 +215,7 @@ Such a delay minimizes the chance of temporary control of traffic by an attacker
 The length of this optional delay is implementation specific and might, for example, be calculated heuristically based on previous observations for the given network attachment.
 Nodes implementing this delay MAY provide a configuration option to disable the delay.
 
-If native IPv4 connectivity becomes available later for a given interface, the node SHOULD disable CLAT for that interface (unless explicitly configured to keep it running) as discussed in the following section.
+If native IPv4 connectivity becomes available later for a given interface, the node MUST disable CLAT for that interface (unless explicitly configured to keep it running) as discussed in the following section.
 </t>
 <t>
 If the node supports multiple IPv4 continuity solutions, the node MUST follow recommendations from Section 4 of <xref target="RFC7335"/> to avoid IPv4 address space conflicts.
@@ -227,7 +227,7 @@ If the node supports multiple IPv4 continuity solutions, the node MUST follow re
 <name>Disabling CLAT</name>
 <t>
 It is possible that after a CLAT instance has started, native IPv4 connectivity becomes available (e.g., an IPv4 address received via DHCP).
-Unless explicitly configured otherwise, the node MUST disable CLAT immediately upon obtaining a native IPv4 default gateway.
+If the node is not explicitly configured to prefer CLAT over native IPv4 by an administrator, the node MUST disable the CLAT instance immediately upon obtaining a native IPv4 default gateway on the interface served by that instance.
 </t>
 <t>
 Disabling CLAT when native IPv4 connectivity is available can be impactful for all applications and traffic flows already utilizing CLAT.
@@ -382,7 +382,7 @@ Using a checksum-neutral CLAT address provides the following benefits:
 </li>
 <li>
 <t>
-If a protocol uses the standard IP checksum, CLAT doesn't need to recalculate the checksum.
+If a protocol uses the standard Internet checksum <xref target="RFC1071"/>, CLAT doesn't need to recalculate the checksum.
 That improves the chances of the protocol working via CLAT even if CLAT is not aware of the protocol's semantics.
 </t>
 </li>
@@ -437,7 +437,7 @@ Justification: A simple example is if a node doesn't respond to unicast NSes, an
 </li>
 <li>
 <t>
-The node that has the address registration using DHCPv6 <xref target="RFC9686"/> enabled MUST register the CLAT addresses if the network supports the registration.
+The node that has the address registration using DHCPv6 <xref target="RFC9686"/> enabled MUST register the CLAT addresses the same way as non-CLAT addresses, if the network supports the registration.
 </t>
 <ul> 
 <li> 
@@ -465,7 +465,11 @@ Mixing configuration information from different routers (e.g., generating a CLAT
 For example, if packets with source addresses from prefix_A are sent to router_B, that router (or the uplink network) might drop the packets according to BCP 38 <xref target="RFC2827"/>.
 Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those packets are sent to router_B, that router might not be configured to translate packets for that prefix.
 </t>
-
+<t>
+The Provisioning Domain (PvD) architecture <xref target="RFC7556"/> provides a mechanism for a PvD-aware node to operate correctly in such scenarios.
+However, at the time of writing PvD support is uncommon for host operating systems, and PvD support is not widely deployed by network operators.
+Therefore this document focuses on scenarios when the node is not PvD-aware.
+</t>
 <t>
 This document does not aim to define CLAT behavior for every possible multi-router/multi-prefix scenario. Instead, this section provides recommendations for common scenarios, leaving numerous corner cases out of scope.
 </t>
@@ -842,11 +846,13 @@ In the vast majority of the cases it means that address is never visible outside
  
       <references>
 	      <name>Informative References</name>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1071.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.1918.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.2827.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6104.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6105.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7225.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7556.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8900.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8978.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
@@ -863,7 +869,7 @@ In the vast majority of the cases it means that address is never visible outside
     <section anchor="Acknowledgements" numbered="false">
       <name>Acknowledgements</name>
 <t>
-Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Menachem Dodge, Jeremy Duncan, Wesley Eddy, Goetz Goerisch, Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, Nicolai Leymann, George Michaelson, Jordi Palet, Michael Richardson, Nathan Sherrard, Dieter Siegmund, Robert Sparks, Dave Thaler, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
+Thanks to Mohamed Boucadair, Ondrej Caletka, Stuart Cheshire, Menachem Dodge, Jeremy Duncan, Wesley Eddy, Goetz Goerisch, James Harr , Jason Healy, Ed Horley, KAWASHIMA Masanobu, Ted Lemon, Nicolai Leymann, George Michaelson, Jordi Palet, Michael Richardson, Nathan Sherrard, Dieter Siegmund, Robert Sparks, Dave Thaler, Philipp S. Tiesel, Eric Vyncke for the discussions, the input, and all contribution.
 </t>
     </section>
     
