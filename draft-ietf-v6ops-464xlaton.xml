@@ -299,7 +299,7 @@ CLAT IPv6 Addresses
 <section anchor="slaac">
 <name>Obtaining CLAT IPv6 Addresses</name>
 <t>
-Section 6.3 of <xref target="RFC6877"/> recommends that a CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD <xref target="I-D.ietf-dhc-rfc8415bis"/>.
+Section 6.3 of <xref target="RFC6877"/> recommends that a CLAT instance acquires a dedicated /64 for translating between IPv4 and IPv6, and only uses a single interface IPv6 address if a dedicated prefix is not available via DHCPv6-PD <xref target="RFC9915"/>.
 However, deployments where each node can obtain a dedicated /64 just for CLAT are rather uncommon, especially in environments such as enterprise networks and Wi-Fi hotspots.
 Quite often the CLAT instance uses a single IPv6 address as a source for all IPv4 traffic translated by CLAT. 
 In particular, if the CLAT only provides the IPv4 connectivity to applications local to the node (or if the node chooses to perform stateful NAT44) the CLAT instance only needs a single CLAT IPv6 address, so obtaining a /64 is wasteful.
@@ -466,7 +466,7 @@ For example, if packets with source addresses from prefix_A are sent to router_B
 Similarly, if the CLAT instance uses PREF64_A, advertised by router_A, but those packets are sent to router_B, that router might not be configured to translate packets for that prefix.
 </t>
 <t>
-The Provisioning Domain (PvD) architecture <xref target="RFC7556"/> provides a mechanism for a PvD-aware node to operate correctly in such scenarios.
+The Provisioning Domain (PvD) architecture <xref target="RFC7556"/> provides a mechanism for a PvD-aware node to operate correctly in such scenarios (see <xref target="RFC8801"/>).
 However, at the time of writing PvD support is uncommon for host operating systems, and PvD support is not widely deployed by network operators.
 Therefore this document focuses on scenarios when the node is not PvD-aware.
 </t>
@@ -838,8 +838,8 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9463.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9686.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9872.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.9915.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-6man-rfc6724-update.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-dhc-rfc8415bis.xml"/>
         <!-- The recommended and simplest way to include a well known reference -->
         
       </references>
@@ -853,6 +853,7 @@ In the vast majority of the cases it means that address is never visible outside
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.6105.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7225.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.7556.xml"/>
+        <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8801.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8900.xml"/>
         <xi:include href="https://www.rfc-editor.org/refs/bibxml/reference.RFC.8978.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-pquip-pqc-engineers.xml"/>
